@@ -1,0 +1,224 @@
+<div class="container form clearFix" style="margin: 5% auto; max-width: 980px;">
+  <form
+    [formGroup]="registerForm"
+    class="clearFix"
+    (ngSubmit)="onSubmit(registerForm.value)"
+  >
+    <h2 class="my-4">Cadastrar</h2>
+
+    <div class="float-left">
+      <h5 class="pr-1 pl-1">Informações Pessoais</h5>
+
+      <div class="form-group pr-1 pl-1">
+        <input
+          type="text"
+          formControlName="name"
+          class="form-control"
+          placeholder="Nome*"
+        />
+      </div>
+
+      <div class="float-left form-group pr-1 pl-1">
+        <input
+          type="text"
+          mask="000.000.000-00"
+          formControlName="cpf"
+          class="form-control"
+          placeholder="CPF*"
+        />
+
+        <div *ngIf="false">
+          <p class="text-danger">Por favor digite um CPF válido.</p>
+        </div>
+      </div>
+
+      <div class="float-right form-group pr-1 pl-1">
+        <input
+          type="text"
+          mask="(00)0 0000-0000"
+          formControlName="phone"
+          class="form-control"
+          placeholder="Telefone*"
+        />
+      </div>
+
+      <div class="form-group pr-1 pl-1">
+        <input
+          type="email"
+          mask="00/00/0000"
+          formControlName="birth"
+          class="form-control"
+          placeholder="Data de Nascimento*"
+        />
+      </div>
+
+      <div>
+        <div>
+          <h5 class="pr-1 pl-1">Endereço</h5>
+
+          <div class="float-left form-group pr-1 pl-1">
+            <input
+              type="text"
+              mask="00000-000"
+              formControlName="cep"
+              class="form-control"
+              placeholder="CEP*"
+            />
+          </div>
+
+          <div class="float-right form-group pr-1 pl-1">
+            <input
+              type="text"
+              formControlName="publicPlace"
+              class="form-control"
+              placeholder="Logradouro*"
+            />
+          </div>
+
+          <div class="form-group pr-1 pl-1">
+            <input
+              type="text"
+              formControlName="num"
+              class="form-control"
+              placeholder="Número*"
+            />
+          </div>
+
+          <div class="float-right form-group pr-1 pl-1">
+            <input
+              type="text"
+              formControlName="neighborhood"
+              class="form-control"
+              placeholder="Bairro*"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearFix">
+      <div class="float-right">
+        <h5 class="pr-1 pl-1">Automóvel</h5>
+        <div class="form-group pr-1 pl-1">
+          <div class="form-group input-wrapper">
+            <img
+              class="img-thumbnail"
+              width="80"
+              height="80"
+              [src]="imageSrc || vehicleSrc"
+              alt="Sua imagem"
+            />
+            <br />
+            <label for="input-file">
+              Selecionar um arquivo*
+            </label>
+            <input
+              type="file"
+              id="input-file"
+              formControlName="photo"
+              name="photo"
+              type="file"
+              value=""
+              (change)="readURL($event)"
+            />
+            <span id="file-name"></span>
+          </div>
+        </div>
+
+        <div class="float-left form-group pr-1 pl-1">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Automóvel
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Carros</a>
+              <a class="dropdown-item" href="#">Motos</a>
+              <a class="dropdown-item" href="#">Caminhões</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="float-left form-group pr-1 pl-1">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Marca
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </div>
+        </div>
+        <div class="clearFix"></div>
+        <div class="float-left form-group pr-1 pl-1">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Modelo
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="float-left form-group pr-1 pl-1">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Ano
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="float-right form-group pr-1 pl-1">
+          <p>Valor: 1200.000,00</p>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="button text-center py-4">
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="registerForm.invalid"
+      >
+        Cadastrar
+      </button>
+    </div>
+  </form>
+</div>
