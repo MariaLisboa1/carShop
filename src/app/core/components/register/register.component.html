@@ -1,3 +1,5 @@
+<app-header></app-header>
+
 <div class="container form clearFix" style="margin: 5% auto; max-width: 980px;">
   <form
     [formGroup]="registerForm"
@@ -126,83 +128,55 @@
         </div>
 
         <div class="float-left form-group pr-1 pl-1">
-          <div class="dropdown">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
+          <select formControlName="automovel" id="automovel">
+            <option
+              *ngFor="let automovel of automoveis"
+              [value]="automovel.name"
+              [selected]="automovel.name"
             >
-              Automóvel
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Carros</a>
-              <a class="dropdown-item" href="#">Motos</a>
-              <a class="dropdown-item" href="#">Caminhões</a>
-            </div>
-          </div>
+              Automóvel:
+              {{ automovel.name }}
+            </option>
+          </select>
         </div>
 
         <div class="float-left form-group pr-1 pl-1">
-          <div class="dropdown">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
+          <select formControlName="make" id="make">
+            <option
+              *ngFor="let make of makes"
+              [value]="make.name"
+              [selected]="make.name"
             >
-              Marca
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
+              Marca:
+              {{ make.name }}
+            </option>
+          </select>
         </div>
         <div class="clearFix"></div>
         <div class="float-left form-group pr-1 pl-1">
-          <div class="dropdown">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
+          <select formControlName="model" id="model">
+            <option
+              *ngFor="let model of models"
+              [value]="model.name"
+              [selected]="model.name"
             >
-              Modelo
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
+              Modelo:
+              {{ model.name }}
+            </option>
+          </select>
         </div>
 
         <div class="float-left form-group pr-1 pl-1">
-          <div class="dropdown">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
+          <select formControlName="year" id="year">
+            <option
+              *ngFor="let year of years"
+              [value]="year.name"
+              [selected]="year.name"
             >
-              Ano
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
+              Ano:
+              {{ year.name }}
+            </option>
+          </select>
         </div>
 
         <!-- <div class="float-right form-group pr-1 pl-1">

@@ -12,6 +12,31 @@ export class RegisterComponent implements OnInit {
 
   imageSrc: any;
   selectFile: File = null;
+
+  automoveis = [
+    { name: "Carro", id: 1 },
+    { name: "Moto", id: 1 },
+    { name: "Caminhão", id: 1 },
+  ];
+
+  makes = [
+    { name: "marca1", id: 1 },
+    { name: "marca1", id: 1 },
+    { name: "marca1", id: 1 },
+  ];
+
+  models = [
+    { name: "modelo1", id: 1 },
+    { name: "modelo1", id: 1 },
+    { name: "modelo1", id: 1 },
+  ];
+
+  years = [
+    { name: "ano1", id: 1 },
+    { name: "ano1", id: 1 },
+    { name: "ano1", id: 1 },
+  ];
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -26,6 +51,10 @@ export class RegisterComponent implements OnInit {
       publicPlace: this.fb.control("", [Validators.required]),
       num: this.fb.control("", [Validators.required]),
       neighborhood: this.fb.control("", [Validators.required]),
+      automovel: this.fb.control("", [Validators.required]),
+      make: this.fb.control("", [Validators.required]),
+      model: this.fb.control("", [Validators.required]),
+      year: this.fb.control("", [Validators.required]),
     });
   }
 
