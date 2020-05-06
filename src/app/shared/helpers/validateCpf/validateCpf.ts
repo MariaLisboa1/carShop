@@ -54,7 +54,8 @@ export class GenericValidator {
   static isValidDate() {
     return (control: AbstractControl): Validators => {
       const date = control.value;
-      if (date && date.length > 6) {
+
+      if (date && date.length >= 7) {
         const formattedDate =
           date.slice(4) + date.slice(2, 4) + date.slice(0, 2);
 
@@ -63,8 +64,8 @@ export class GenericValidator {
         } else {
           return { dateNotValid: true };
         }
-      }
-      return null;
+      } else if (date && date.length > 0) return { dateNotValid: true };
+      return;
     };
   }
 }

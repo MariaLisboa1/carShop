@@ -1,0 +1,115 @@
+.container {
+  background: #ffffff;
+  width: 100%;
+  margin: 0 auto;
+
+  margin: 20px auto 32px;
+  padding: 20px 30px;
+  border-radius: 4px;
+  box-shadow: 0 8px 20px 0 rgba(158, 184, 209, 0.43);
+}
+
+.form {
+  margin: 5% auto;
+  max-width: 800px;
+}
+
+//@extend
+
+input {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #c2c2c2;
+  border-radius: 6px;
+  opacity: 1;
+}
+
+.clearFix::after,
+.clearFix::before {
+  content: " ";
+  display: table;
+}
+
+.clearFix::after {
+  clear: both;
+}
+
+h5 {
+  max-width: 100%;
+}
+
+.left-inner-addon {
+  position: relative;
+}
+
+.left-inner-addon app-view-password {
+  position: absolute;
+  left: calc(100% - 9%);
+  margin: 10px auto;
+  color: #666;
+}
+
+.have-account:before {
+  background-color: #0056b3;
+}
+
+a {
+  text-decoration: none;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.input-wrapper label {
+  background: #7626ff 0% 0% no-repeat padding-box;
+  color: #fff;
+  box-shadow: 0px 10px 39px #867ff67a;
+  border-radius: 36px;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 6px 20px;
+  text-align: center;
+}
+
+.input-wrapper label:hover {
+  background: #a673ff;
+}
+
+.input-wrapper label:focus {
+  background: #533980;
+}
+
+select {
+  margin-top: 20px;
+  background-size: 24px 24px;
+  background-color: #fff;
+  background-position: left 9px center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  border: 2px solid #ecedf2;
+  border-radius: 8px;
+  height: 47px;
+  padding-left: 10px;
+  padding-right: 0;
+  -webkit-transition: 0s;
+  transition: 0s;
+  font-size: 14px;
+  min-width: 180px;
+  max-width: 180px;
+}
+
+.value {
+  max-width: 180px;
+  min-width: 180px;
+}
+
+@media (max-width: 850px) {
+  div {
+    clear: both;
+    min-width: 100%;
+    overflow-x: hidden;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
