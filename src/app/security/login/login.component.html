@@ -1,0 +1,39 @@
+<app-header> </app-header>
+
+<div class="container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h1 class="py-2">Login</h1>
+
+    <div class="row">
+      <div class="col-12">
+        <app-input>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="Email*"
+          />
+        </app-input>
+      </div>
+
+      <div class="col-12">
+        <app-input>
+          <input
+            class="form-control"
+            type="password"
+            formControlName="password"
+            placeholder="Senha*"
+          />
+        </app-input>
+      </div>
+    </div>
+    <div class="spinner" *ngIf="visibleLoading"></div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Entrar</button>
+    </div>
+    <a class="no-have-account" [routerLink]="['/seller-register']"
+      >Não tem um conta? Cadastre-se</a
+    >
+  </form>
+</div>
