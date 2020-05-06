@@ -1,0 +1,44 @@
+<app-header> </app-header>
+<div class="container">
+  <form [formGroup]="sellerRegisterForm" (ngSubmit)="onSubmit()">
+    <h1 class="my-4">Cadastro de Vendedor</h1>
+
+    <div class="row">
+      <div class="col">
+        <app-input>
+          <input
+            type="text"
+            formControlName="name"
+            class="form-control"
+            placeholder="Nome*"
+          />
+        </app-input>
+
+        <app-input>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="Email*"
+          />
+        </app-input>
+
+        <app-input>
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control"
+            placeholder="Senha*"
+          />
+        </app-input>
+      </div>
+    </div>
+
+    <button
+      class="btn btn-primary text-center"
+      [disabled]="sellerRegisterForm.invalid"
+    >
+      Cadastrar
+    </button>
+  </form>
+</div>

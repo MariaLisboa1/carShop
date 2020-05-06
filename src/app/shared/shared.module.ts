@@ -4,7 +4,7 @@ import { AppRoutingModule } from "../app-routing.module";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HeaderComponent } from "./components/header/header.component";
 import { InputComponent } from "./components/input/input.component";
-import { FormComponent } from "./components/form/form.component";
+import { FormClientComponent } from "./components/form-client/form-client.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgxMaskModule } from "ngx-mask";
 
@@ -17,7 +17,7 @@ import { NgxMaskModule } from "ngx-mask";
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
   ],
-  declarations: [HeaderComponent, InputComponent, FormComponent],
+  declarations: [HeaderComponent, InputComponent, FormClientComponent],
   exports: [
     AppRoutingModule,
     CommonModule,
@@ -25,7 +25,7 @@ import { NgxMaskModule } from "ngx-mask";
     ReactiveFormsModule,
     HeaderComponent,
     InputComponent,
-    FormComponent,
+    FormClientComponent,
   ],
   providers: [],
 })

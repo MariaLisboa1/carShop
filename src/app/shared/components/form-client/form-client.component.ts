@@ -4,11 +4,11 @@ import { IBrand, IModel, IYear, IValue } from "src/app/interfaces/interfaces";
 import { VehiclesService } from "src/app/services/vehicles.service";
 
 @Component({
-  selector: "app-form",
-  templateUrl: "./form.component.html",
-  styleUrls: ["./form.component.scss"],
+  selector: "app-form-client",
+  templateUrl: "./form-client.component.html",
+  styleUrls: ["./form-client.component.scss"],
 })
-export class FormComponent implements OnInit {
+export class FormClientComponent implements OnInit {
   @Input() formGroupDynamic: FormGroup;
   @Input() client;
   @Input() title;
