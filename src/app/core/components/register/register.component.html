@@ -46,7 +46,7 @@
 
       <div class="form-group pr-1 pl-1">
         <input
-          type="email"
+          type="text"
           mask="00/00/0000"
           formControlName="birth"
           class="form-control"
@@ -128,71 +128,74 @@
         </div>
 
         <div class="float-left form-group pr-1 pl-1">
-          <select formControlName="automovel" id="automovel">
+          <select
+            formControlName="vehicle"
+            id="vehicle"
+            (input)="getVehicleBrands()"
+          >
             <option
-              *ngFor="let automovel of automoveis"
-              [value]="automovel.name"
-              [selected]="automovel.name"
+              *ngFor="let vehicle of vehicles"
+              [value]="vehicle.nome"
+              [selected]="vehicle.nome"
             >
-              Automóvel:
-              {{ automovel.name }}
+              Veículo:
+              {{ vehicle.nome }}
             </option>
           </select>
         </div>
 
         <div class="float-left form-group pr-1 pl-1">
-          <select formControlName="make" id="make">
+          <select formControlName="brand" id="brand" (input)="getModels()">
             <option
-              *ngFor="let make of makes"
-              [value]="make.name"
-              [selected]="make.name"
+              *ngFor="let brand of brands"
+              [value]="brand.codigo"
+              [selected]="brand.nome"
             >
               Marca:
-              {{ make.name }}
+              {{ brand.nome }}
             </option>
           </select>
         </div>
         <div class="clearFix"></div>
         <div class="float-left form-group pr-1 pl-1">
-          <select formControlName="model" id="model">
+          <select formControlName="model" id="model" (input)="getYear()">
             <option
               *ngFor="let model of models"
-              [value]="model.name"
-              [selected]="model.name"
+              [value]="model.codigo"
+              [selected]="model.nome"
             >
               Modelo:
-              {{ model.name }}
+              {{ model.nome }}
             </option>
           </select>
         </div>
 
         <div class="float-left form-group pr-1 pl-1">
-          <select formControlName="year" id="year">
+          <select formControlName="year" id="year" (input)="getValue()">
             <option
               *ngFor="let year of years"
-              [value]="year.name"
-              [selected]="year.name"
+              [value]="year.codigo"
+              [selected]="year.nome"
             >
               Ano:
-              {{ year.name }}
+              {{ year.nome }}
             </option>
           </select>
         </div>
+      </div>
 
-        <!-- <div class="float-right form-group pr-1 pl-1">
-          <p>Valor: 1200.000,00</p>
-        </div> -->
+      <div class="float-right form-group pr-1 pl-1">
+        <p class="value">Valor: {{ value?.Valor || "0,00" }}</p>
       </div>
     </div>
 
     <div class="button text-center py-4">
-      <button
-        type="button"
-        class="btn btn-primary"
-        [disabled]="registerForm.invalid"
-      >
+      <button type="button" class="btn btn-primary" (click)="onSubmit()">
         Cadastrar
       </button>
+      <p class="text-danger py-2" *ngIf="hasRegistration">
+        Já existe cadastro para esse CPF.
+      </p>
     </div>
   </form>
 </div>

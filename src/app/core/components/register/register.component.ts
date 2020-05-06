@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-
+import { VehiclesService } from "src/app/services/vehicles.service";
+import { IBrand, IModel, IYear, IValue } from "src/app/interfaces/interfaces";
+import { Router } from "@angular/router";
 @Component({
   selector: "app-register",
   templateUrl: "./register.component.html",
@@ -13,31 +15,24 @@ export class RegisterComponent implements OnInit {
   imageSrc: any;
   selectFile: File = null;
 
-  automoveis = [
-    { name: "Carro", id: 1 },
-    { name: "Moto", id: 1 },
-    { name: "Caminhão", id: 1 },
-  ];
+  vehicles = [{ nome: "Carros" }, { nome: "Motos" }, { nome: "Caminhões" }];
+  path: string;
+  idBrand: number;
+  idModel: number;
+  year: string;
 
-  makes = [
-    { name: "marca1", id: 1 },
-    { name: "marca1", id: 1 },
-    { name: "marca1", id: 1 },
-  ];
+  brands: IBrand[] = [];
+  models: IModel[] = [];
+  years: IYear[] = [];
+  value: IValue;
 
-  models = [
-    { name: "modelo1", id: 1 },
-    { name: "modelo1", id: 1 },
-    { name: "modelo1", id: 1 },
-  ];
+  hasRegistration = false;
 
-  years = [
-    { name: "ano1", id: 1 },
-    { name: "ano1", id: 1 },
-    { name: "ano1", id: 1 },
-  ];
-
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private vehicleService: VehiclesService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.registerForm = this.fb.group({
@@ -46,16 +41,17 @@ export class RegisterComponent implements OnInit {
       phone: this.fb.control("", [Validators.required]),
       birth: this.fb.control("", [Validators.required]),
       photo: this.fb.control(""),
-      markModel: this.fb.control("", [Validators.required]),
       cep: this.fb.control("", [Validators.required]),
       publicPlace: this.fb.control("", [Validators.required]),
       num: this.fb.control("", [Validators.required]),
       neighborhood: this.fb.control("", [Validators.required]),
-      automovel: this.fb.control("", [Validators.required]),
-      make: this.fb.control("", [Validators.required]),
-      model: this.fb.control("", [Validators.required]),
-      year: this.fb.control("", [Validators.required]),
+      vehicle: this.fb.control("caminhoes"),
+      brand: this.fb.control("102"),
+      model: this.fb.control("5986"),
+      year: this.fb.control("32000-3"),
     });
+
+    this.inicializer();
   }
 
   readURL(event) {
@@ -72,8 +68,93 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  getVehicleBrands() {
+    this.path = this.getSelect("vehicle") || "caminhoes";
+
+    this.vehicleService.getVehicleBrands(this.path).subscribe(
+      (brands) => (this.brands = brands),
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  getModels() {
+    this.idBrand = parseFloat(this.getSelect("brand")) || 102;
+
+    this.vehicleService.getModels(this.path, this.idBrand).subscribe(
+      (models) => {
+        this.models = models.modelos;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  getYear() {
+    this.idModel = parseFloat(this.getSelect("model")) || 5986;
+
+    this.vehicleService
+      .getYear(this.path, this.idBrand, this.idModel)
+      .subscribe(
+        (years) => {
+          this.years = years;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
+
+  getValue() {
+    this.year = this.getSelect("year") || "32000-3";
+
+    this.vehicleService
+      .getValue(this.path, this.idBrand, this.idModel, this.year)
+      .subscribe(
+        (value) => {
+          this.value = value;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
+
+  createValue() {
+    return {
+      value: this.value.Valor,
+      brand: this.value.Marca,
+      model: this.value.Modelo,
+      yearModel: this.value.AnoModelo,
+      fuel: this.value.Combustivel,
+      codeFipe: this.value.CodigoFipe,
+      referenceMonth: this.value.MesReferencia,
+      vehicleType: this.value.TipoVeiculo,
+      fuelAbbreviation: this.value.SiglaCombustivel,
+    };
+  }
+
   onSubmit() {
-    console.log("Clicou em salvar");
+    this.registerForm.value["value"] = this.createValue();
+
+    let registrations = JSON.parse(localStorage.getItem("register"));
+    if (registrations) {
+      const findCpf = registrations.find(
+        (register) => register.cpf === this.registerForm.value.cpf
+      );
+
+      if (findCpf) return (this.hasRegistration = true);
+
+      const registrationsStorage = [...registrations, this.registerForm.value];
+
+      localStorage.setItem("register", JSON.stringify(registrationsStorage));
+      this.hasRegistration = false;
+      return;
+    }
+
+    localStorage.setItem("register", JSON.stringify([this.registerForm.value]));
   }
 
   sendPhoto(id) {
@@ -97,5 +178,19 @@ export class RegisterComponent implements OnInit {
       //     }
       //   );
     }
+  }
+
+  getSelect(id: any) {
+    const select = document.getElementById(id) as HTMLSelectElement;
+    return select.options[select.selectedIndex]
+      ? select.options[select.selectedIndex].value.toLowerCase()
+      : "";
+  }
+
+  inicializer() {
+    this.getVehicleBrands();
+    this.getModels();
+    this.getYear();
+    this.getValue();
   }
 }
