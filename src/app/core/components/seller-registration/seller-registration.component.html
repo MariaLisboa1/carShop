@@ -34,11 +34,18 @@
       </div>
     </div>
 
-    <button
-      class="btn btn-primary text-center"
-      [disabled]="sellerRegisterForm.invalid"
+    <div class="spinner" *ngIf="visibleLoading"></div>
+
+    <div class="col-12">
+      <button
+        class="btn btn-primary text-center"
+        [disabled]="sellerRegisterForm.invalid"
+      >
+        Cadastrar
+      </button>
+    </div>
+    <a class="have-account" [routerLink]="['/login']"
+      >Já tem uma conta? Faça login</a
     >
-      Cadastrar
-    </button>
   </form>
 </div>
