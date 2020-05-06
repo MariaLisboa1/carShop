@@ -1,12 +1,16 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, registerLocaleData } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from "../shared/shared.module";
 import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "../app-routing.module";
 import { NgxMaskModule } from "ngx-mask";
 import { RegisterComponent } from "./components/register/register.component";
+import { VehiclesService } from "../services/vehicles.service";
 
+import { LOCALE_ID } from "@angular/core";
+import ptBr from "@angular/common/locales/pt";
+registerLocaleData(ptBr);
 @NgModule({
   imports: [
     HttpClientModule,
@@ -18,6 +22,6 @@ import { RegisterComponent } from "./components/register/register.component";
   ],
   declarations: [RegisterComponent],
   exports: [RegisterComponent, AppRoutingModule, HttpClientModule],
-  providers: [],
+  providers: [VehiclesService, { provide: LOCALE_ID, useValue: "pt-PT" }],
 })
 export class CoreModule {}
