@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Toast } from "src/app/shared/helpers/Toast/toast";
 
 @Component({
   selector: "app-home",
@@ -9,7 +11,7 @@ export class HomeComponent implements OnInit {
   clients: any;
   noHaveClients = false;
 
-  constructor() {}
+  constructor(private router: Router, private toast: Toast) {}
 
   ngOnInit() {
     this.clients = JSON.parse(localStorage.getItem("register"));
@@ -24,8 +26,13 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  deleteClient(clientCpf) {
-    this.clients = this.clients.filter((client) => client.cpf !== clientCpf);
+  deleteClient(cpf) {
+    this.clients = this.clients.filter((client) => client.cpf !== cpf);
     localStorage.setItem("register", JSON.stringify(this.clients));
+    this.toast.emitToastSuccess("Cliente deletado com sucesso.");
+  }
+
+  editClient(cpf) {
+    this.router.navigate(["/edit-client"], { queryParams: { cpf } });
   }
 }

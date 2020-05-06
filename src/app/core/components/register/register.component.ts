@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { VehiclesService } from "src/app/services/vehicles.service";
 import { IBrand, IModel, IYear, IValue } from "src/app/interfaces/interfaces";
 import { Router } from "@angular/router";
 import { GenericValidator } from "src/app/shared/helpers/validateCpf/validateCpf";
@@ -18,22 +17,8 @@ export class RegisterComponent implements OnInit {
   imageSrc: any;
   selectFile: File = null;
 
-  vehicles = [{ nome: "Carros" }, { nome: "Motos" }, { nome: "Caminhões" }];
-  path: string;
-  idBrand: number;
-  idModel: number;
-  year: string;
-
-  brands: IBrand[] = [];
-  models: IModel[] = [];
-  years: IYear[] = [];
-  value: IValue;
-
-  hasRegistration = false;
-
   constructor(
     private fb: FormBuilder,
-    private vehicleService: VehiclesService,
     private router: Router,
     private toast: Toast
   ) {}
@@ -60,13 +45,6 @@ export class RegisterComponent implements OnInit {
       model: this.fb.control("5986"),
       year: this.fb.control("32000-3"),
     });
-
-    this.inicializer();
-  }
-
-  textInvalid() {
-    console.log(this.registerForm.value);
-    console.log(this.registerForm.invalid);
   }
 
   readURL(event) {
@@ -83,78 +61,10 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  getVehicleBrands() {
-    this.path = this.getSelect("vehicle") || "caminhoes";
-
-    this.vehicleService.getVehicleBrands(this.path).subscribe(
-      (brands) => (this.brands = brands),
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
-
-  getModels() {
-    this.idBrand = parseFloat(this.getSelect("brand")) || 102;
-
-    this.vehicleService.getModels(this.path, this.idBrand).subscribe(
-      (models) => {
-        this.models = models.modelos;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
-
-  getYear() {
-    this.idModel = parseFloat(this.getSelect("model")) || 5986;
-
-    this.vehicleService
-      .getYear(this.path, this.idBrand, this.idModel)
-      .subscribe(
-        (years) => {
-          this.years = years;
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-  }
-
-  getValue() {
-    this.year = this.getSelect("year") || "32000-3";
-
-    this.vehicleService
-      .getValue(this.path, this.idBrand, this.idModel, this.year)
-      .subscribe(
-        (value) => {
-          this.value = value;
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-  }
-
-  createValue() {
-    return {
-      value: this.value.Valor,
-      brand: this.value.Marca,
-      model: this.value.Modelo,
-      yearModel: this.value.AnoModelo,
-      fuel: this.value.Combustivel,
-      codeFipe: this.value.CodigoFipe,
-      referenceMonth: this.value.MesReferencia,
-      vehicleType: this.value.TipoVeiculo,
-      fuelAbbreviation: this.value.SiglaCombustivel,
-    };
-  }
-
   onSubmit() {
-    this.validateDate();
+    console.log(this.registerForm.value);
+    return;
     const messageSuccess = "Cadastro realizado com sucesso.";
-    this.registerForm.value["value"] = this.createValue();
 
     let registrations = JSON.parse(localStorage.getItem("register"));
     if (registrations) {
@@ -170,17 +80,16 @@ export class RegisterComponent implements OnInit {
       const registrationsStorage = [...registrations, this.registerForm.value];
 
       localStorage.setItem("register", JSON.stringify(registrationsStorage));
-      this.hasRegistration = false;
       this.toast.emitToastSuccess(messageSuccess);
       return;
     }
 
     localStorage.setItem("register", JSON.stringify([this.registerForm.value]));
     this.toast.emitToastSuccess(messageSuccess);
-  }
 
-  validateDate() {
-    const date = this.registerForm.value.birth;
+    setTimeout(() => {
+      this.router.navigate(["/"]);
+    }, 2000);
   }
 
   sendPhoto(id) {
@@ -204,19 +113,5 @@ export class RegisterComponent implements OnInit {
       //     }
       //   );
     }
-  }
-
-  getSelect(id: any) {
-    const select = document.getElementById(id) as HTMLSelectElement;
-    return select.options[select.selectedIndex]
-      ? select.options[select.selectedIndex].value.toLowerCase()
-      : "";
-  }
-
-  inicializer() {
-    this.getVehicleBrands();
-    this.getModels();
-    this.getYear();
-    this.getValue();
   }
 }

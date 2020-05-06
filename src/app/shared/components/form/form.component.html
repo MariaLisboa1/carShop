@@ -1,0 +1,213 @@
+<div class="container form clearFix" style="margin: 5% auto; max-width: 980px;">
+  <form
+    [formGroup]="formGroupDynamic"
+    class="clearFix"
+    (ngSubmit)="onSubmit(formGroupDynamic.value)"
+  >
+    <h2 class="my-4">{{ title }}</h2>
+
+    <div class="float-left">
+      <h5 class="pr-1 pl-1">Informações Pessoais</h5>
+
+      <div class="form-group pr-1 pl-1">
+        <app-input>
+          <input
+            type="text"
+            formControlName="name"
+            class="form-control"
+            placeholder="Nome*"
+          />
+        </app-input>
+      </div>
+
+      <div class="float-left form-group pr-1 pl-1">
+        <app-input
+          ><input
+            type="text"
+            mask="000.000.000-00"
+            formControlName="cpf"
+            class="form-control"
+            placeholder="CPF*"
+            [readonly]="readonly"
+        /></app-input>
+
+        <div *ngIf="formGroupDynamic.get('cpf').getError('cpfNotValid')">
+          <p class="text-danger">Por favor digite um CPF válido.</p>
+        </div>
+      </div>
+
+      <div class="float-right form-group pr-1 pl-1">
+        <app-input>
+          <input
+            type="text"
+            mask="(00)0 0000-0000"
+            formControlName="phone"
+            class="form-control"
+            placeholder="Telefone*"
+          />
+        </app-input>
+      </div>
+
+      <div class="form-group pr-1 pl-1">
+        <input
+          type="text"
+          mask="00/00/0000"
+          formControlName="birth"
+          class="form-control"
+          placeholder="Data de Nascimento*"
+        />
+
+        <div *ngIf="formGroupDynamic.get('birth').getError('dateNotValid')">
+          <p class="text-danger">Por favor digite uma data válida.</p>
+        </div>
+      </div>
+
+      <div>
+        <div>
+          <h5 class="pr-1 pl-1">Endereço</h5>
+
+          <div class="float-left form-group pr-1 pl-1">
+            <app-input>
+              <input
+                type="text"
+                mask="00000-000"
+                formControlName="cep"
+                class="form-control"
+                placeholder="CEP*"
+              />
+            </app-input>
+          </div>
+
+          <div class="float-right form-group pr-1 pl-1">
+            <app-input>
+              <input
+                type="text"
+                formControlName="publicPlace"
+                class="form-control"
+                placeholder="Logradouro*"
+              />
+            </app-input>
+          </div>
+
+          <div class="form-group pr-1 pl-1">
+            <app-input>
+              <input
+                type="text"
+                formControlName="neighborhood"
+                class="form-control"
+                placeholder="Bairro*"
+              />
+            </app-input>
+          </div>
+
+          <div class="float-left form-group pr-1 pl-1">
+            <app-input>
+              <input
+                type="text"
+                formControlName="num"
+                class="form-control"
+                placeholder="Número*"
+              />
+            </app-input>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearFix">
+      <div class="float-right">
+        <h5 class="pr-1 pl-1">Automóvel</h5>
+        <div class="form-group pr-1 pl-1">
+          <div class="form-group input-wrapper">
+            <img
+              class="img-thumbnail"
+              width="80"
+              height="80"
+              [src]="imageSrc || vehicleSrc"
+              alt="Sua imagem"
+            />
+            <br />
+            <label for="input-file">
+              Selecionar um arquivo
+            </label>
+            <input
+              type="file"
+              id="input-file"
+              formControlName="photo"
+              name="photo"
+              type="file"
+              value=""
+              (change)="readURL($event)"
+            />
+            <span id="file-name"></span>
+          </div>
+        </div>
+
+        <div class="float-left form-group pr-1 pl-1">
+          <select
+            formControlName="vehicle"
+            id="vehicle"
+            (input)="getVehicleBrands()"
+          >
+            <option
+              *ngFor="let vehicle of vehicles"
+              [value]="vehicle.nome"
+              [selected]="vehicle.nome"
+            >
+              Veículo:
+              {{ vehicle.nome }}
+            </option>
+          </select>
+        </div>
+
+        <div class="float-left form-group pr-1 pl-1">
+          <select formControlName="brand" id="brand" (input)="getModels()">
+            <option
+              *ngFor="let brand of brands"
+              [value]="brand.codigo"
+              [selected]="brand.nome"
+            >
+              Marca:
+              {{ brand.nome }}
+            </option>
+          </select>
+        </div>
+        <div class="clearFix"></div>
+        <div class="float-left form-group pr-1 pl-1">
+          <select formControlName="model" id="model" (input)="getYear()">
+            <option
+              *ngFor="let model of models"
+              [value]="model.codigo"
+              [selected]="model.nome"
+            >
+              Modelo:
+              {{ model.nome }}
+            </option>
+          </select>
+        </div>
+
+        <div class="float-left form-group pr-1 pl-1">
+          <select formControlName="year" id="year" (input)="getValue()">
+            <option
+              *ngFor="let year of years"
+              [value]="year.codigo"
+              [selected]="year.nome"
+            >
+              Ano:
+              {{ year.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="float-right form-group pr-1 pl-1">
+        <p class="value">Valor: {{ value?.Valor || "0,00" }}</p>
+      </div>
+    </div>
+    <div class="button text-center py-4">
+      <button type="submit" class="btn btn-primary">
+        {{ titleBtn }}
+      </button>
+    </div>
+  </form>
+</div>

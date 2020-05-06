@@ -1,0 +1,10 @@
+<app-header></app-header>
+
+<app-form
+  [readonly]="true"
+  [client]="client"
+  [title]="'Editar Cliente'"
+  [titleBtn]="'Editar Cliente'"
+  [formGroupDynamic]="editProfileForm"
+  (btnSubmit)="editClient($event)"
+></app-form>
