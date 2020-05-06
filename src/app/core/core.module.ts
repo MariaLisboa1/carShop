@@ -12,7 +12,8 @@ import { LOCALE_ID } from "@angular/core";
 import ptBr from "@angular/common/locales/pt";
 import { HomeComponent } from "./components/home/home.component";
 import { EditClientComponent } from "./components/edit-client/edit-client.component";
-import { SellerRegistrationComponent } from './components/seller-registration/seller-registration.component';
+import { SellerRegistrationComponent } from "./components/seller-registration/seller-registration.component";
+import { LoginComponent } from "../security/login/login.component";
 registerLocaleData(ptBr);
 @NgModule({
   imports: [
@@ -23,7 +24,13 @@ registerLocaleData(ptBr);
     SharedModule,
     NgxMaskModule.forRoot(),
   ],
-  declarations: [RegisterComponent, HomeComponent, EditClientComponent, SellerRegistrationComponent],
+  declarations: [
+    RegisterComponent,
+    HomeComponent,
+    EditClientComponent,
+    SellerRegistrationComponent,
+    LoginComponent,
+  ],
   exports: [RegisterComponent, AppRoutingModule, HttpClientModule],
   providers: [VehiclesService, { provide: LOCALE_ID, useValue: "pt-PT" }],
 })
