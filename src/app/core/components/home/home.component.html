@@ -1,0 +1,24 @@
+<app-header></app-header>
+
+<div class="container">
+  <h1 class="text-center py-3">Clientes</h1>
+
+  <div>
+    <div class="messageError" *ngIf="noHaveClients">
+      <h4 class="text-danger text-center">Não tem clientes.</h4>
+    </div>
+
+    <ul *ngFor="let client of clients">
+      <li>
+        <div>
+          <strong>
+            <p>{{ converteLowerCase(client.name) }}</p>
+            <a>Detalhes</a>
+          </strong>
+          <a class="float-right" (click)="deleteClient(client.cpf)">Excluir</a>
+          <p>{{ client.cpf | mask: "000.000.000-00" }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

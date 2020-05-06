@@ -64,6 +64,11 @@ export class RegisterComponent implements OnInit {
     this.inicializer();
   }
 
+  textInvalid() {
+    console.log(this.registerForm.value);
+    console.log(this.registerForm.invalid);
+  }
+
   readURL(event) {
     this.selectFile = <File>event.target.files[0];
 
