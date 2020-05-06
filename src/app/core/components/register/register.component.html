@@ -84,18 +84,19 @@
           <div class="form-group pr-1 pl-1">
             <input
               type="text"
-              formControlName="num"
-              class="form-control"
-              placeholder="Número*"
-            />
-          </div>
-
-          <div class="float-right form-group pr-1 pl-1">
-            <input
-              type="text"
               formControlName="neighborhood"
               class="form-control"
               placeholder="Bairro*"
+            />
+          </div>
+
+          <div class="float-left form-group pr-1 pl-1">
+            <input
+              type="text"
+              formControlName="num"
+              (input)="textInvalid()"
+              class="form-control"
+              placeholder="Número*"
             />
           </div>
         </div>
@@ -116,7 +117,7 @@
             />
             <br />
             <label for="input-file">
-              Selecionar um arquivo*
+              Selecionar um arquivo
             </label>
             <input
               type="file"
@@ -192,7 +193,6 @@
         <p class="value">Valor: {{ value?.Valor || "0,00" }}</p>
       </div>
     </div>
-
     <div class="button text-center py-4">
       <button type="button" class="btn btn-primary" (click)="onSubmit()">
         Cadastrar
