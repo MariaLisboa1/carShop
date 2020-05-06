@@ -4,16 +4,40 @@
   <h1 class="text-center py-3">Clientes</h1>
 
   <div>
-    <ul *ngFor="let client of clients">
-      <li>
-        <div>
-          <strong>
-            <p>{{ client.name }}</p>
-            <a>Detalhes</a>
-          </strong>
-          <p>{{ 108.762.804 - 04 }}</p>
-        </div>
-      </li>
-    </ul>
+    <div class="messageError" *ngIf="noHaveClients">
+      <h4 class="text-danger text-center">Não tem clientes.</h4>
+    </div>
+    <div class="table-responsive-md">
+      <table class="table table-striped table-hover text-center">
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">CPF</th>
+            <th scope="col">Veículo</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Valor</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let client of clients">
+          <tr>
+            <td>{{ converteLowerCase(client.name) }}</td>
+            <td>{{ client.cpf | mask: "000.000.000-00" }}</td>
+            <td>{{ converteLowerCase(client.vehicle) }}</td>
+            <td>{{ client?.value?.brand }}</td>
+            <td>{{ client?.value?.model }}</td>
+            <td>{{ client?.value?.value }}</td>
+            <td (click)="editClient(client.cpf)">
+              <i class="fa fa-edit" aria-hidden="true"></i>
+            </td>
+            <td (click)="deleteClient(client.cpf)">
+              <i class="fa fa-remove"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
