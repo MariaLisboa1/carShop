@@ -4,4 +4,6 @@ import IBrand from "./Brand";
 import IYear from "./Year";
 import IValue from "./Value";
 import ISeller from "./Seller";
-export { IModel, IVehicle, IBrand, IYear, IValue, ISeller };
+import IAuthentication from "./Authentication";
+
+export { IModel, IVehicle, IBrand, IYear, IValue, ISeller, IAuthentication };
