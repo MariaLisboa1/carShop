@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { VehiclesService } from "src/app/services/vehicles.service";
 import { IBrand, IModel, IYear, IValue } from "src/app/interfaces/interfaces";
 import { Router } from "@angular/router";
+import { GenericValidator } from "src/app/shared/helpers/validateCpf/validateCpf";
+import { Toast } from "src/app/shared/helpers/Toast/toast";
+
 @Component({
   selector: "app-register",
   templateUrl: "./register.component.html",
@@ -31,15 +34,22 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private vehicleService: VehiclesService,
-    private router: Router
+    private router: Router,
+    private toast: Toast
   ) {}
 
   ngOnInit() {
     this.registerForm = this.fb.group({
       name: this.fb.control("", [Validators.required]),
-      cpf: this.fb.control("", [Validators.required]),
+      cpf: this.fb.control({ value: null, disabled: false }, [
+        Validators.required,
+        GenericValidator.isValidCpf(),
+      ]),
       phone: this.fb.control("", [Validators.required]),
-      birth: this.fb.control("", [Validators.required]),
+      birth: this.fb.control({ value: null, disabled: false }, [
+        Validators.required,
+        GenericValidator.isValidDate(),
+      ]),
       photo: this.fb.control(""),
       cep: this.fb.control("", [Validators.required]),
       publicPlace: this.fb.control("", [Validators.required]),
@@ -137,6 +147,8 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    this.validateDate();
+    const messageSuccess = "Cadastro realizado com sucesso.";
     this.registerForm.value["value"] = this.createValue();
 
     let registrations = JSON.parse(localStorage.getItem("register"));
@@ -145,16 +157,25 @@ export class RegisterComponent implements OnInit {
         (register) => register.cpf === this.registerForm.value.cpf
       );
 
-      if (findCpf) return (this.hasRegistration = true);
+      if (findCpf) {
+        this.toast.emitToastError("Já existe cadastro para esse CPF.", "Erro");
+        return;
+      }
 
       const registrationsStorage = [...registrations, this.registerForm.value];
 
       localStorage.setItem("register", JSON.stringify(registrationsStorage));
       this.hasRegistration = false;
+      this.toast.emitToastSuccess(messageSuccess);
       return;
     }
 
     localStorage.setItem("register", JSON.stringify([this.registerForm.value]));
+    this.toast.emitToastSuccess(messageSuccess);
+  }
+
+  validateDate() {
+    const date = this.registerForm.value.birth;
   }
 
   sendPhoto(id) {
