@@ -30,9 +30,15 @@
     <div class="spinner" *ngIf="visibleLoading"></div>
 
     <div class="col-12">
-      <button type="submit" class="btn btn-primary">Entrar</button>
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid"
+        class="btn btn_primary"
+      >
+        Entrar
+      </button>
     </div>
-    <a class="no-have-account" [routerLink]="['/seller-register']"
+    <a class="no-have-account" [routerLink]="['/sellerRegister']"
       >Não tem um conta? Cadastre-se</a
     >
   </form>

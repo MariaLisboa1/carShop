@@ -1,6 +1,8 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 body {
+  font-family: "Roboto", sans-serif;
   background: #f3f5f8;
 }
 
@@ -17,5 +19,44 @@ body {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: #060606;
+}
+
+.btn_primary {
+  background-color: #5e5b53 !important;
+  color: #f9f9f8;
+  border: 2px solid #7d807d !important;
+
+  &:hover {
+    color: #f9f9f8;
+    background-color: #2f2e2a !important;
+  }
+
+  &:focus {
+    color: #f9f9f8;
+  }
+}
+
+.btn_link {
+  border-radius: 32px;
+  margin-right: 10px;
+  margin-left: 10px;
+  color: #b1aa9b;
+  &:hover {
+    color: #7d807d;
+    text-decoration: underline;
+  }
+
+  &:focus {
+    color: #7d807d;
+    border-color: 2px solid red !important;
+    background: transparent !important;
   }
 }

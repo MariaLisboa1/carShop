@@ -24,7 +24,7 @@ export class AuthenticationService {
 
   logout(): void {
     this.http.get(`${environment.urlHeroku}/logout`).subscribe(() => {
-      localStorage.clear();
+      localStorage.removeItem("token");
       this.router.navigate(["/login"]);
     });
   }
