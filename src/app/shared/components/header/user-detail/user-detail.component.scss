@@ -1,0 +1,15 @@
+button {
+  border-radius: 32px;
+  margin-right: 10px;
+  margin-left: 10px;
+  color: #b1aa9b;
+  &:hover {
+    color: #7d807d;
+  }
+
+  &:focus {
+    color: #7d807d;
+    border-color: 2px solid red !important;
+    background: transparent !important;
+  }
+}

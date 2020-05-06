@@ -1,0 +1,16 @@
+<ul class="nav justify-content-end">
+  <li class="nav-item">
+    <button class="btn btn_link" *ngIf="isLoggedIn()">
+      Cadastrar cliente
+    </button>
+  </li>
+
+  <li class="nav-item">
+    <button class="btn btn_link">Sobre</button>
+  </li>
+  <li class="nav-item">
+    <button class="btn btn_link" (click)="logout()" *ngIf="isLoggedIn()">
+      Sair
+    </button>
+  </li>
+</ul>

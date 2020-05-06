@@ -7,6 +7,7 @@ import { InputComponent } from "./components/input/input.component";
 import { FormClientComponent } from "./components/form-client/form-client.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgxMaskModule } from "ngx-mask";
+import { UserDetailComponent } from './components/header/user-detail/user-detail.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { NgxMaskModule } from "ngx-mask";
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
   ],
-  declarations: [HeaderComponent, InputComponent, FormClientComponent],
+  declarations: [HeaderComponent, InputComponent, FormClientComponent, UserDetailComponent],
   exports: [
     AppRoutingModule,
     CommonModule,

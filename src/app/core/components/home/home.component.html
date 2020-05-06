@@ -7,7 +7,7 @@
     <div class="messageError" *ngIf="noHaveClients">
       <h4 class="text-danger text-center">Não tem clientes.</h4>
     </div>
-    <div class="table-responsive-md">
+    <div class="table-responsive-md" *ngIf="!noHaveClients">
       <table class="table table-striped table-hover text-center">
         <thead>
           <tr>
