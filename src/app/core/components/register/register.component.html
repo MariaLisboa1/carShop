@@ -29,7 +29,7 @@
           placeholder="CPF*"
         />
 
-        <div *ngIf="false">
+        <div *ngIf="registerForm.get('cpf').getError('cpfNotValid')">
           <p class="text-danger">Por favor digite um CPF válido.</p>
         </div>
       </div>
@@ -52,6 +52,10 @@
           class="form-control"
           placeholder="Data de Nascimento*"
         />
+
+        <div *ngIf="registerForm.get('birth').getError('dateNotValid')">
+          <p class="text-danger">Por favor digite uma data válida.</p>
+        </div>
       </div>
 
       <div>
