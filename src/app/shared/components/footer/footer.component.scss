@@ -1,0 +1,15 @@
+footer {
+  background-color: #343a40;
+  color: #b1aa9b;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  a {
+    cursor: pointer;
+
+    &:hover {
+      color: #7d807d;
+    }
+  }
+}

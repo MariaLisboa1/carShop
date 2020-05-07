@@ -7,8 +7,9 @@ import { InputComponent } from "./components/input/input.component";
 import { FormClientComponent } from "./components/form-client/form-client.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgxMaskModule } from "ngx-mask";
-import { UserDetailComponent } from './components/header/user-detail/user-detail.component';
-import { Error404Component } from './components/error404/error404.component';
+import { UserDetailComponent } from "./components/header/user-detail/user-detail.component";
+import { Error404Component } from "./components/error404/error404.component";
+import { FooterComponent } from "./components/footer/footer.component";
 
 @NgModule({
   imports: [
@@ -19,7 +20,14 @@ import { Error404Component } from './components/error404/error404.component';
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
   ],
-  declarations: [HeaderComponent, InputComponent, FormClientComponent, UserDetailComponent, Error404Component],
+  declarations: [
+    HeaderComponent,
+    InputComponent,
+    FormClientComponent,
+    UserDetailComponent,
+    Error404Component,
+    FooterComponent,
+  ],
   exports: [
     AppRoutingModule,
     CommonModule,
@@ -27,6 +35,7 @@ import { Error404Component } from './components/error404/error404.component';
     ReactiveFormsModule,
     HeaderComponent,
     InputComponent,
+    FooterComponent,
     FormClientComponent,
   ],
   providers: [],
