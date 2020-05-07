@@ -11,7 +11,7 @@
             formControlName="name"
             class="form-control"
             placeholder="Nome*"
-          />
+            />
         </app-input>
 
         <app-input>
@@ -20,7 +20,7 @@
             formControlName="email"
             class="form-control"
             placeholder="Email*"
-          />
+            />
         </app-input>
 
         <app-input>
@@ -29,7 +29,7 @@
             formControlName="password"
             class="form-control"
             placeholder="Senha*"
-          />
+            />
         </app-input>
       </div>
     </div>
@@ -39,13 +39,13 @@
     <div class="col-12">
       <button
         class="btn btn_primary text-center"
-        [disabled]="sellerRegisterForm.invalid"
-      >
+        [disabled]="sellerRegisterForm.invalid">
         Cadastrar
       </button>
     </div>
-    <a class="have-account" [routerLink]="['/login']"
-      >Já tem uma conta? Faça login</a
-    >
+    <a class="have-account" [routerLink]="['/login']">Já tem uma conta? Faça
+      login</a>
   </form>
 </div>
+
+<app-footer></app-footer>
