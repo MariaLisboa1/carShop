@@ -1,6 +1,8 @@
 <app-header></app-header>
 
-<div class="container">
+<div class="spinner" *ngIf="visibleLoading"></div>
+
+<div class="container" *ngIf="!visibleLoading">
   <h1 class="text-center py-3">Clientes</h1>
 
   <div>

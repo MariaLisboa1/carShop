@@ -11,6 +11,7 @@ import { ClientService } from "src/app/services/client.service";
 export class HomeComponent implements OnInit {
   clients: any;
   noHaveClients = false;
+  visibleLoading = true;
 
   constructor(
     private router: Router,
@@ -21,12 +22,14 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.clientService.getAllClients().subscribe(
       (clients) => {
+        this.visibleLoading = false;
         this.clients = clients;
         if (this.clients) return;
 
         this.noHaveClients = true;
       },
       () => {
+        this.visibleLoading = false;
         this.toast.emitToastError(
           "Ocorreu um erro. Por favor tente mais tarde.",
           "Erro"
