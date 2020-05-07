@@ -8,6 +8,7 @@ import { FormClientComponent } from "./components/form-client/form-client.compon
 import { BrowserModule } from "@angular/platform-browser";
 import { NgxMaskModule } from "ngx-mask";
 import { UserDetailComponent } from './components/header/user-detail/user-detail.component';
+import { Error404Component } from './components/error404/error404.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { UserDetailComponent } from './components/header/user-detail/user-detail
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
   ],
-  declarations: [HeaderComponent, InputComponent, FormClientComponent, UserDetailComponent],
+  declarations: [HeaderComponent, InputComponent, FormClientComponent, UserDetailComponent, Error404Component],
   exports: [
     AppRoutingModule,
     CommonModule,

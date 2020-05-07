@@ -6,6 +6,7 @@ import { EditClientComponent } from "./core/components/edit-client/edit-client.c
 import { SellerRegistrationComponent } from "./core/components/seller-registration/seller-registration.component";
 import { LoginComponent } from "./security/login/login.component";
 import { LoggedInGuard } from "./security/loggedin.guard";
+import { Error404Component } from "./shared/components/error404/error404.component";
 
 const routes: Routes = [
   { path: "home", component: HomeComponent, canActivate: [LoggedInGuard] },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: "sellerRegister", component: SellerRegistrationComponent },
   { path: "login", component: LoginComponent },
   { path: "", redirectTo: "/login", pathMatch: "full" },
+  { path: "**", component: Error404Component },
 ];
 
 @NgModule({
