@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Observable } from "rxjs";
+import { IClient } from "../interfaces/interfaces";
 
 @Injectable({
   providedIn: "root",
@@ -14,8 +15,8 @@ export class ClientService {
 
   constructor(private http: HttpClient) {}
 
-  createClient(client) {
-    return this.http.post(`${environment.urlHeroku}/clients/`, client, {
+  createClient(client): Observable<IClient> {
+    return this.http.post<IClient>(`${environment.urlHeroku}/clients`, client, {
       headers: this.AuthToken,
     });
   }
@@ -26,8 +27,8 @@ export class ClientService {
     });
   }
 
-  getById(id: number) {
-    return this.http.post(`${environment.urlHeroku}/clients/${id}`, {
+  getById(id: string) {
+    return this.http.get(`${environment.urlHeroku}/clients/${id}`, {
       headers: this.AuthToken,
     });
   }
@@ -38,16 +39,16 @@ export class ClientService {
     });
   }
 
-  update(id: number, client) {
+  update(id: string, client) {
     return this.http.put(`${environment.urlHeroku}/clients/${id}`, client, {
       headers: this.AuthToken,
     });
   }
 
-  sendImage(avatar, id: string) {
-    return this.http.put(
+  sendImage(image, id: string) {
+    return this.http.post(
       `${environment.urlHeroku}/clients/image/${id}`,
-      avatar,
+      image,
       {
         headers: this.AuthToken,
       }

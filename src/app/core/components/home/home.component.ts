@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Toast } from "src/app/shared/helpers/Toast/toast";
+import { ClientService } from "src/app/services/client.service";
 
 @Component({
   selector: "app-home",
@@ -11,13 +12,27 @@ export class HomeComponent implements OnInit {
   clients: any;
   noHaveClients = false;
 
-  constructor(private router: Router, private toast: Toast) {}
+  constructor(
+    private router: Router,
+    private toast: Toast,
+    private clientService: ClientService
+  ) {}
 
   ngOnInit() {
-    this.clients = JSON.parse(localStorage.getItem("register"));
-    if (this.clients) return;
+    this.clientService.getAllClients().subscribe(
+      (clients) => {
+        this.clients = clients;
+        if (this.clients) return;
 
-    this.noHaveClients = true;
+        this.noHaveClients = true;
+      },
+      () => {
+        this.toast.emitToastError(
+          "Ocorreu um erro. Por favor tente mais tarde.",
+          "Erro"
+        );
+      }
+    );
   }
 
   converteLowerCase(name: string) {
@@ -26,13 +41,22 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  deleteClient(cpf) {
-    this.clients = this.clients.filter((client) => client.cpf !== cpf);
-    localStorage.setItem("register", JSON.stringify(this.clients));
-    this.toast.emitToastSuccess("Cliente deletado com sucesso.");
+  deleteClient(id: number) {
+    this.clientService.delete(id).subscribe(
+      () => {
+        this.clients = this.clients.filter((client) => client._id !== id);
+        this.toast.emitToastSuccess("Cliente deletado com sucesso.");
+      },
+      () => {
+        this.toast.emitToastError(
+          "Ocorreu um erro ao excluir o cliente. Tente mais tarde.",
+          "Erro"
+        );
+      }
+    );
   }
 
-  editClient(cpf) {
-    this.router.navigate(["/edit-client"], { queryParams: { cpf } });
+  editClient(id) {
+    this.router.navigate(["/edit-client"], { queryParams: { id } });
   }
 }

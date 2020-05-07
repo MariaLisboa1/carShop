@@ -25,14 +25,14 @@
           <tr>
             <td>{{ converteLowerCase(client.name) }}</td>
             <td>{{ client.cpf | mask: "000.000.000-00" }}</td>
-            <td>{{ converteLowerCase(client.vehicle) }}</td>
-            <td>{{ client?.value?.brand }}</td>
-            <td>{{ client?.value?.model }}</td>
-            <td>{{ client?.value?.value }}</td>
-            <td (click)="editClient(client.cpf)">
+            <td>{{ converteLowerCase("CarrO") }}</td>
+            <td>{{ client?.vehicle?.brand }}</td>
+            <td>{{ client?.vehicle?.model }}</td>
+            <td>{{ client?.vehicle?.value }}</td>
+            <td (click)="editClient(client._id)">
               <i class="fa fa-edit" aria-hidden="true"></i>
             </td>
-            <td (click)="deleteClient(client.cpf)">
+            <td (click)="deleteClient(client._id)">
               <i class="fa fa-remove"></i>
             </td>
           </tr>
