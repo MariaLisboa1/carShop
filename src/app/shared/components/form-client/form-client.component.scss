@@ -14,8 +14,6 @@
   max-width: 800px;
 }
 
-//@extend
-
 input {
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid #c2c2c2;
@@ -37,15 +35,8 @@ h5 {
   max-width: 100%;
 }
 
-.left-inner-addon {
-  position: relative;
-}
-
-.left-inner-addon app-view-password {
-  position: absolute;
-  left: calc(100% - 9%);
-  margin: 10px auto;
-  color: #666;
+button.btn.btn_primary {
+  float: right;
 }
 
 .have-account:before {
@@ -61,7 +52,8 @@ input[type="file"] {
 }
 
 .input-wrapper label {
-  background: #7626ff 0% 0% no-repeat padding-box;
+  cursor: pointer;
+  background: #7d807d 0% 0% no-repeat padding-box;
   color: #fff;
   box-shadow: 0px 10px 39px #867ff67a;
   border-radius: 36px;
@@ -72,11 +64,11 @@ input[type="file"] {
 }
 
 .input-wrapper label:hover {
-  background: #a673ff;
+  background: #2f2e2a;
 }
 
 .input-wrapper label:focus {
-  background: #533980;
+  background: #2f2e2a;
 }
 
 select {

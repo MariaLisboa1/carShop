@@ -133,7 +133,6 @@
             <input
               type="file"
               id="input-file"
-              formControlName="photo"
               name="photo"
               type="file"
               value=""
@@ -149,11 +148,7 @@
             id="vehicle"
             (input)="getVehicleBrands()"
           >
-            <option
-              *ngFor="let vehicle of vehicles"
-              [value]="vehicle.nome"
-              [selected]="vehicle.nome"
-            >
+            <option *ngFor="let vehicle of vehicles" [value]="vehicle.codigo">
               Veículo:
               {{ vehicle.nome }}
             </option>
@@ -204,10 +199,25 @@
         <p class="value">Valor: {{ value?.Valor || "0,00" }}</p>
       </div>
     </div>
-    <div class="button text-center py-4">
-      <button type="submit" class="btn btn-primary">
-        {{ titleBtn }}
-      </button>
+    <div class="spinner" *ngIf="visibleLoading"></div>
+
+    <div class="row">
+      <div class="col-6 text-center py-4">
+        <button type="submit" class="btn btn_primary">
+          {{ titleBtn }}
+        </button>
+      </div>
+
+      <div class="col-6 py-4">
+        <button
+          type="submit"
+          *ngIf="visibleDelete"
+          (click)="delClient()"
+          class="btn btn-danger"
+        >
+          Excluir
+        </button>
+      </div>
     </div>
   </form>
 </div>

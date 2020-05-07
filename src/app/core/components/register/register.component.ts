@@ -4,6 +4,7 @@ import { IBrand, IModel, IYear, IValue } from "src/app/interfaces/interfaces";
 import { Router } from "@angular/router";
 import { GenericValidator } from "src/app/shared/helpers/validateCpf/validateCpf";
 import { Toast } from "src/app/shared/helpers/Toast/toast";
+import { ClientService } from "src/app/services/client.service";
 
 @Component({
   selector: "app-register",
@@ -16,10 +17,12 @@ export class RegisterComponent implements OnInit {
 
   imageSrc: any;
   selectFile: File = null;
+  visibleLoading = false;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private clientService: ClientService,
     private toast: Toast
   ) {}
 
@@ -47,71 +50,78 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  readURL(event) {
-    this.selectFile = <File>event.target.files[0];
-
-    if (<File>event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-
-      const reader = new FileReader();
-
-      reader.onload = (e) => (this.imageSrc = reader.result);
-
-      reader.readAsDataURL(file);
-    }
-  }
-
   onSubmit() {
-    console.log(this.registerForm.value);
-    return;
-    const messageSuccess = "Cadastro realizado com sucesso.";
+    this.visibleLoading = true;
 
-    let registrations = JSON.parse(localStorage.getItem("register"));
-    if (registrations) {
-      const findCpf = registrations.find(
-        (register) => register.cpf === this.registerForm.value.cpf
-      );
-
-      if (findCpf) {
-        this.toast.emitToastError("Já existe cadastro para esse CPF.", "Erro");
-        return;
+    this.clientService.createClient(this.assembleClient()).subscribe(
+      (client) => this.sendPhoto(client._id),
+      (err) => {
+        console.log(err);
       }
-
-      const registrationsStorage = [...registrations, this.registerForm.value];
-
-      localStorage.setItem("register", JSON.stringify(registrationsStorage));
-      this.toast.emitToastSuccess(messageSuccess);
-      return;
-    }
-
-    localStorage.setItem("register", JSON.stringify([this.registerForm.value]));
-    this.toast.emitToastSuccess(messageSuccess);
-
-    setTimeout(() => {
-      this.router.navigate(["/"]);
-    }, 2000);
+    );
   }
 
   sendPhoto(id) {
     const photo = new FormData();
 
     if (this.selectFile) {
-      Object.defineProperty(this.selectFile, "name", {
+      Object.defineProperty(this.selectFile, "image", {
         writable: true,
-        value: id.id + ".png",
+        value: id + ".png",
       });
 
-      //   photo.append("photo", this.selectFile, this.selectFile.name);
+      photo.append("image", this.selectFile, this.selectFile.name);
 
-      //   this.registerService.sendPhoto(photo, id.id).subscribe(
-      //     res => {
-      //       this.toast.emitToastSuccess("Conta criada com sucesso.");
-      //       this.route.navigate(["/login"]);
-      //     },
-      //     err => {
-      //       console.log(err);
-      //     }
-      //   );
+      this.clientService.sendImage(photo, id).subscribe(
+        () => {
+          this.toast.emitToastSuccess("Foto cadastra com sucesso.");
+          this.router.navigate(["/"]);
+          this.visibleLoading = false;
+        },
+        (err) => {
+          this.visibleLoading = false;
+        }
+      );
+      return;
     }
+    this.visibleLoading = false;
+    this.toast.emitToastSuccess("Cliente cadastrado com sucesso.");
+    this.router.navigate(["/"]);
+  }
+
+  assembleClient() {
+    const form = this.registerForm.value;
+    this.selectFile = form.photo;
+
+    const address = {
+      cep: form.cep,
+      publicPlace: form.publicPlace,
+      num: form.num,
+      neighborhood: form.neighborhood,
+    };
+
+    const vehicle = {
+      type: form.vehicle,
+      brand: form.brand,
+      model: form.model,
+      year: form.year,
+      value: form.value.value,
+      yearModel: form.value.yearModel,
+      fuel: form.value.yearMfuelodel,
+      codeFipe: form.value.codeFipe,
+      referenceMonth: form.value.referenceMonth,
+      vehicleType: form.value.vehicleType,
+      fuelAbbreviation: form.value.fuelAbbreviation,
+    };
+
+    const client = {
+      name: form.name,
+      cpf: form.cpf,
+      phone: form.phone,
+      birth_date: form.birth,
+      address,
+      vehicle,
+    };
+    return client;
   }
 }

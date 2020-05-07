@@ -14,7 +14,10 @@ export class FormClientComponent implements OnInit {
   @Input() title;
   @Input() titleBtn;
   @Input() readonly;
+  @Input() visibleLoading;
+  @Input() visibleDelete;
   @Output() btnSubmit = new EventEmitter();
+  @Output() deleteClient = new EventEmitter();
 
   vehicleSrc = "../../../../assets/images/vehicle.png";
   imageSrc: any;
@@ -40,15 +43,24 @@ export class FormClientComponent implements OnInit {
 
   ngOnInit() {
     this.inicializer();
+    this.imageSrc = this.formGroupDynamic.value.photo;
   }
 
   onSubmit(client) {
     client["value"] = this.createValue();
+
+    if (this.selectFile) {
+      client["photo"] = this.selectFile;
+    }
     this.btnSubmit.emit(client);
   }
 
   getVehicleBrands() {
-    this.path = this.getSelect("vehicle") || "caminhoes";
+    this.path = this.getSelect("vehicle")
+      ? this.getSelect("vehicle")
+      : this.client
+      ? this.client.vehicle.type
+      : "caminhoes";
 
     this.vehicleService.getVehicleBrands(this.path).subscribe(
       (brands) => (this.brands = brands),
@@ -61,7 +73,7 @@ export class FormClientComponent implements OnInit {
   getModels() {
     this.idBrand =
       parseFloat(this.getSelect("brand")) ||
-      (this.client ? this.client.brand : 102);
+      (this.client ? this.client.vehicle.brand : 102);
 
     this.vehicleService.getModels(this.path, this.idBrand).subscribe(
       (models) => {
@@ -74,10 +86,11 @@ export class FormClientComponent implements OnInit {
   }
 
   getYear() {
-    this.idModel =
-      parseFloat(this.getSelect("model")) || this.client
-        ? this.client.model
-        : 5986;
+    this.idModel = parseFloat(this.getSelect("model"))
+      ? parseFloat(this.getSelect("model"))
+      : this.client
+      ? this.client.vehicle.model
+      : 5986;
 
     this.vehicleService
       .getYear(this.path, this.idBrand, this.idModel)
@@ -92,8 +105,11 @@ export class FormClientComponent implements OnInit {
   }
 
   getValue() {
-    this.year =
-      this.getSelect("year") || this.client ? this.client.year : "32000-3";
+    this.year = this.getSelect("year")
+      ? this.getSelect("year")
+      : this.client
+      ? this.client.vehicle.year
+      : "32000-3";
 
     this.vehicleService
       .getValue(this.path, this.idBrand, this.idModel, this.year)
@@ -142,10 +158,15 @@ export class FormClientComponent implements OnInit {
     }
   }
 
-  inicializer() {
-    this.getVehicleBrands();
-    this.getModels();
-    this.getYear();
-    this.getValue();
+  delClient() {
+    this.visibleLoading = true;
+    this.deleteClient.emit();
+  }
+
+  async inicializer() {
+    await this.getVehicleBrands();
+    await this.getModels();
+    await this.getYear();
+    await this.getValue();
   }
 }
