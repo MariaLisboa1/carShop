@@ -55,7 +55,6 @@ input[type="file"] {
   cursor: pointer;
   background: #7d807d 0% 0% no-repeat padding-box;
   color: #fff;
-  box-shadow: 0px 10px 39px #867ff67a;
   border-radius: 36px;
   border-radius: 5px;
   margin: 10px;
@@ -97,11 +96,75 @@ select {
 }
 
 @media (max-width: 850px) {
+  h5,
+  h2 {
+    margin-top: 10px;
+  }
+
+  .div-btn {
+    min-width: 0%;
+  }
+
+  div {
+    float: none !important;
+  }
+  .value {
+    margin-top: 15px;
+    margin: 10px auto;
+  }
+
+  .form-group.input-wrapper {
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 850px) {
   div {
     clear: both;
     min-width: 100%;
-    overflow-x: hidden;
     padding-left: 5px;
     padding-right: 5px;
+    margin: 0 auto;
+  }
+  select {
+    min-width: 405px;
+    max-width: 405px;
+  }
+
+  .form-group.input-wrapper {
+    padding-left: 115px;
+    padding-right: 115px;
+  }
+
+  img.img-thumbnail {
+    margin-left: 45px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  h5,
+  h2 {
+    text-align: center;
+  }
+
+  .form-group {
+    min-width: 250px;
+    max-width: 250px;
+    margin: 0 auto;
+  }
+
+  select {
+    min-width: 250px;
+    max-width: 250px;
+  }
+
+  .form-group.input-wrapper {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  img.img-thumbnail {
+    margin-left: 30px;
   }
 }

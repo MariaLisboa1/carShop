@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { IBrand, IModel, IYear, IValue } from "src/app/interfaces/interfaces";
 import { VehiclesService } from "src/app/services/vehicles.service";
+import { Toast } from "../../helpers/Toast/toast";
 
 @Component({
   selector: "app-form-client",
@@ -39,7 +40,7 @@ export class FormClientComponent implements OnInit {
   idModel: number;
   year: string;
 
-  constructor(private vehicleService: VehiclesService) {}
+  constructor(private vehicleService: VehiclesService, private toast: Toast) {}
 
   ngOnInit() {
     this.inicializer();
@@ -64,9 +65,7 @@ export class FormClientComponent implements OnInit {
 
     this.vehicleService.getVehicleBrands(this.path).subscribe(
       (brands) => (this.brands = brands),
-      (err) => {
-        console.log(err);
-      }
+      () => this.showMessageError()
     );
   }
 
@@ -76,12 +75,8 @@ export class FormClientComponent implements OnInit {
       (this.client ? this.client.vehicle.brand : 102);
 
     this.vehicleService.getModels(this.path, this.idBrand).subscribe(
-      (models) => {
-        this.models = models.modelos;
-      },
-      (err) => {
-        console.log(err);
-      }
+      (models) => (this.models = models.modelos),
+      () => this.showMessageError()
     );
   }
 
@@ -95,12 +90,8 @@ export class FormClientComponent implements OnInit {
     this.vehicleService
       .getYear(this.path, this.idBrand, this.idModel)
       .subscribe(
-        (years) => {
-          this.years = years;
-        },
-        (err) => {
-          console.log(err);
-        }
+        (years) => (this.years = years),
+        () => this.showMessageError()
       );
   }
 
@@ -114,12 +105,8 @@ export class FormClientComponent implements OnInit {
     this.vehicleService
       .getValue(this.path, this.idBrand, this.idModel, this.year)
       .subscribe(
-        (value) => {
-          this.value = value;
-        },
-        (err) => {
-          console.log(err);
-        }
+        (value) => (this.value = value),
+        () => this.showMessageError()
       );
   }
 
@@ -168,5 +155,12 @@ export class FormClientComponent implements OnInit {
     await this.getModels();
     await this.getYear();
     await this.getValue();
+  }
+
+  showMessageError() {
+    this.toast.emitToastError(
+      "Ocorreu um erro, por favor tente mais tarde.",
+      "Erro"
+    );
   }
 }

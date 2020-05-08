@@ -60,12 +60,12 @@ export class GenericValidator {
           date.slice(4) + date.slice(2, 4) + date.slice(0, 2);
 
         if (moment(formattedDate).isValid()) {
-          return { dateNotValid: false };
+          return null;
         } else {
           return { dateNotValid: true };
         }
-      } else if (date && date.length > 0) return { dateNotValid: true };
-      return;
+      }
+      return null;
     };
   }
 }
