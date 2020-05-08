@@ -21,3 +21,9 @@ input {
 .no-have-account:hover {
   color: #343a40;
 }
+
+@media (max-width: 850px) {
+  .container {
+    max-width: 350px !important;
+  }
+}

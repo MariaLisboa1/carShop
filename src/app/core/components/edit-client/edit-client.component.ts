@@ -72,9 +72,6 @@ export class EditClientComponent implements OnInit {
       model: this.fb.control(this.client.vehicle.model),
       year: this.fb.control(this.client.vehicle.year),
     });
-    console.log(this.client);
-    console.log(this.client.vehicle.image);
-
     this.loadingForm = false;
   }
 
@@ -83,12 +80,7 @@ export class EditClientComponent implements OnInit {
 
     this.clientService.update(this.id, this.assembleClient()).subscribe(
       () => this.updateImage(),
-      () => {
-        this.toast.emitToastError(
-          "Ocorreu um erro, por favor tente mais tarde.",
-          "Erro"
-        );
-      }
+      () => this.showMessageError()
     );
   }
 
@@ -111,10 +103,7 @@ export class EditClientComponent implements OnInit {
         },
         () => {
           this.visibleLoading = false;
-          this.toast.emitToastError(
-            "Ocorreu um erro, por favor tente mais tarde.",
-            "Erro"
-          );
+          this.showMessageError();
         }
       );
       return;
@@ -165,14 +154,16 @@ export class EditClientComponent implements OnInit {
     this.clientService.delete(this.client._id).subscribe(
       () => {
         this.toast.emitToastSuccess("Cliente deletado com sucesso.");
-        this.router.navigate(["/"]);
+        this.router.navigate(["/home"]);
       },
-      () => {
-        this.toast.emitToastError(
-          "Ocorreu um erro ao excluir o cliente. Tente mais tarde.",
-          "Erro"
-        );
-      }
+      () => this.showMessageError()
+    );
+  }
+
+  showMessageError() {
+    this.toast.emitToastError(
+      "Ocorreu um erro, por favor tente mais tarde.",
+      "Erro"
     );
   }
 }

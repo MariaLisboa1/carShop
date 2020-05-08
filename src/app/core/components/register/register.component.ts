@@ -55,9 +55,7 @@ export class RegisterComponent implements OnInit {
 
     this.clientService.createClient(this.assembleClient()).subscribe(
       (client) => this.sendPhoto(client._id),
-      (err) => {
-        console.log(err);
-      }
+      () => this.showMessageError()
     );
   }
 
@@ -78,7 +76,7 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(["/"]);
           this.visibleLoading = false;
         },
-        (err) => {
+        () => {
           this.visibleLoading = false;
         }
       );
@@ -123,5 +121,12 @@ export class RegisterComponent implements OnInit {
       vehicle,
     };
     return client;
+  }
+
+  showMessageError() {
+    this.toast.emitToastError(
+      "Ocorreu um erro, por favor tente mais tarde.",
+      "Erro"
+    );
   }
 }

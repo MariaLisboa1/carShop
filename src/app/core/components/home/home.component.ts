@@ -30,10 +30,7 @@ export class HomeComponent implements OnInit {
       },
       () => {
         this.visibleLoading = false;
-        this.toast.emitToastError(
-          "Ocorreu um erro. Por favor tente mais tarde.",
-          "Erro"
-        );
+        this.showMessageError();
       }
     );
   }
@@ -50,16 +47,18 @@ export class HomeComponent implements OnInit {
         this.clients = this.clients.filter((client) => client._id !== id);
         this.toast.emitToastSuccess("Cliente deletado com sucesso.");
       },
-      () => {
-        this.toast.emitToastError(
-          "Ocorreu um erro ao excluir o cliente. Tente mais tarde.",
-          "Erro"
-        );
-      }
+      () => this.showMessageError()
     );
   }
 
   editClient(id) {
     this.router.navigate(["/edit-client"], { queryParams: { id } });
+  }
+
+  showMessageError() {
+    this.toast.emitToastError(
+      "Ocorreu um erro, por favor tente mais tarde.",
+      "Erro"
+    );
   }
 }

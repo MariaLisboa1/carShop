@@ -61,53 +61,51 @@
       </div>
 
       <div>
-        <div>
-          <h5 class="pr-1 pl-1">Endereço</h5>
+        <h5 class="pr-1 pl-1">Endereço</h5>
 
-          <div class="float-left form-group pr-1 pl-1">
-            <app-input>
-              <input
-                type="text"
-                mask="00000-000"
-                formControlName="cep"
-                class="form-control"
-                placeholder="CEP*"
-                />
-            </app-input>
-          </div>
+        <div class="float-left form-group pr-1 pl-1">
+          <app-input>
+            <input
+              type="text"
+              mask="00000-000"
+              formControlName="cep"
+              class="form-control"
+              placeholder="CEP*"
+              />
+          </app-input>
+        </div>
 
-          <div class="float-right form-group pr-1 pl-1">
-            <app-input>
-              <input
-                type="text"
-                formControlName="publicPlace"
-                class="form-control"
-                placeholder="Logradouro*"
-                />
-            </app-input>
-          </div>
+        <div class="float-right form-group pr-1 pl-1">
+          <app-input>
+            <input
+              type="text"
+              formControlName="publicPlace"
+              class="form-control"
+              placeholder="Logradouro*"
+              />
+          </app-input>
+        </div>
 
-          <div class="form-group pr-1 pl-1">
-            <app-input>
-              <input
-                type="text"
-                formControlName="neighborhood"
-                class="form-control"
-                placeholder="Bairro*"
-                />
-            </app-input>
-          </div>
+        <div class="form-group pr-1 pl-1">
+          <app-input>
+            <input
+              type="text"
+              formControlName="neighborhood"
+              class="form-control"
+              placeholder="Bairro*"
+              />
+          </app-input>
+        </div>
 
-          <div class="float-left form-group pr-1 pl-1">
-            <app-input>
-              <input
-                type="text"
-                formControlName="num"
-                class="form-control"
-                placeholder="Número*"
-                />
-            </app-input>
-          </div>
+        <div class="float-left form-group pr-1 pl-1">
+          <app-input>
+            <input
+              type="text"
+              formControlName="num"
+              class="form-control"
+              placeholder="Número*"
+              />
+          </app-input>
         </div>
       </div>
     </div>
@@ -194,15 +192,15 @@
       </div>
     </div>
     <div class="spinner" *ngIf="visibleLoading"></div>
-
     <div class="row">
-      <div class="col-6 text-center py-4">
-        <button type="submit" class="btn btn_primary">
+      <div class="col-6 div-btn text-center py-4">
+        <button [disabled]="formGroupDynamic.invalid" type="submit" class="btn
+          btn_primary">
           {{ titleBtn }}
         </button>
       </div>
 
-      <div class="col-6 py-4">
+      <div class="col-6 div-btn py-4">
         <button
           type="submit"
           *ngIf="visibleDelete"
