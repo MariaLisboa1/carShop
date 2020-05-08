@@ -3,7 +3,7 @@ import { By } from "@angular/platform-browser";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Toast } from "src/app/shared/helpers/toast/toast";
 import { HttpClientModule } from "@angular/common/http";
-import { CUSTOM_ELEMENTS_SCHEMA, Input } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { FormsModule, ReactiveFormsModule, FormBuilder } from "@angular/forms";
 import { FormClientComponent } from "./form-client.component";
 import { CommonModule } from "@angular/common";
