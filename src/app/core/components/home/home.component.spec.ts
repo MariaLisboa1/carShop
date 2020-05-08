@@ -123,4 +123,20 @@ describe("HomeComponent", () => {
       expect(de.innerText).toContain("R$ 3.820,00");
     });
   });
+
+  describe("Checks the CSS", () => {
+    it("Should be class `spinner`", () => {
+      fixture.detectChanges();
+      const el = fixture.debugElement.query(By.css(".spinner"));
+
+      expect(el).toBeTruthy();
+    });
+
+    it("Should be class `container`", () => {
+      fixture.detectChanges();
+      const el = fixture.debugElement.query(By.css(".container"));
+
+      expect(el).toBeTruthy();
+    });
+  });
 });

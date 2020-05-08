@@ -5,7 +5,7 @@
   <h1 class="text-center py-3">Clientes</h1>
 
   <div>
-    <div class="messageError" *ngIf="noHaveClients">
+    <div *ngIf="noHaveClients">
       <h4 class="text-danger text-center">Não tem clientes.</h4>
     </div>
     <div class="table-responsive-md" *ngIf="!noHaveClients">
@@ -24,8 +24,8 @@
         </thead>
         <tbody *ngFor="let client of clients">
           <tr>
-            <td class="name">{{ client?.name }}</td>
-            <td class="cpf">{{ client?.cpf }}</td>
+            <td>{{ client?.name }}</td>
+            <td>{{ client?.cpf }}</td>
             <td>{{ formatText(client?.vehicle?.type) }}</td>
             <td>{{ client?.vehicle?.brand }}</td>
             <td>{{ client?.vehicle?.model }}</td>
