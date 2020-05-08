@@ -1,17 +1,17 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { IBrand, IModel, IYear, IValue } from "src/app/interfaces/interfaces";
 import { Router } from "@angular/router";
 import { GenericValidator } from "src/app/shared/helpers/validateCpf/validateCpf";
-import { Toast } from "src/app/shared/helpers/Toast/toast";
+import { Toast } from "src/app/shared/helpers/toast/toast";
 import { ClientService } from "src/app/services/client.service";
+import { Builder } from "src/app/shared/helpers/builder/builder";
 
 @Component({
-  selector: "app-register",
-  templateUrl: "./register.component.html",
-  styleUrls: ["./register.component.scss"],
+  selector: "app-register-client",
+  templateUrl: "./register-client.component.html",
+  styleUrls: ["./register-client.component.scss"],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterClientComponent implements OnInit {
   registerForm: FormGroup;
   vehicleSrc = "../../../../assets/images/vehicle.png";
 
@@ -23,7 +23,8 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private clientService: ClientService,
-    private toast: Toast
+    private toast: Toast,
+    private builder: Builder
   ) {}
 
   ngOnInit() {
@@ -52,81 +53,42 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.visibleLoading = true;
+    this.selectFile = this.registerForm.value.photo;
+    const client = this.builder.buildClient(this.registerForm.value);
 
-    this.clientService.createClient(this.assembleClient()).subscribe(
+    this.clientService.createClient(client).subscribe(
       (client) => this.sendPhoto(client._id),
-      () => this.showMessageError()
+      () => this.toast.emitToastError()
     );
   }
 
   sendPhoto(id) {
     const photo = new FormData();
+    const file = this.selectFile;
 
-    if (this.selectFile) {
-      Object.defineProperty(this.selectFile, "image", {
+    if (file) {
+      Object.defineProperty(file, "image", {
         writable: true,
         value: id + ".png",
       });
 
-      photo.append("image", this.selectFile, this.selectFile.name);
+      photo.append("image", file, file.name);
 
       this.clientService.sendImage(photo, id).subscribe(
         () => {
           this.toast.emitToastSuccess("Foto cadastra com sucesso.");
-          this.router.navigate(["/"]);
+          this.router.navigate(["/home"]);
           this.visibleLoading = false;
         },
         () => {
           this.visibleLoading = false;
+          this.toast.emitToastError();
         }
       );
       return;
     }
     this.visibleLoading = false;
     this.toast.emitToastSuccess("Cliente cadastrado com sucesso.");
-    this.router.navigate(["/"]);
-  }
-
-  assembleClient() {
-    const form = this.registerForm.value;
-    this.selectFile = form.photo;
-
-    const address = {
-      cep: form.cep,
-      publicPlace: form.publicPlace,
-      num: form.num,
-      neighborhood: form.neighborhood,
-    };
-
-    const vehicle = {
-      type: form.vehicle,
-      brand: form.brand,
-      model: form.model,
-      year: form.year,
-      value: form.value.value,
-      yearModel: form.value.yearModel,
-      fuel: form.value.yearMfuelodel,
-      codeFipe: form.value.codeFipe,
-      referenceMonth: form.value.referenceMonth,
-      vehicleType: form.value.vehicleType,
-      fuelAbbreviation: form.value.fuelAbbreviation,
-    };
-
-    const client = {
-      name: form.name,
-      cpf: form.cpf,
-      phone: form.phone,
-      birth_date: form.birth,
-      address,
-      vehicle,
-    };
-    return client;
-  }
-
-  showMessageError() {
-    this.toast.emitToastError(
-      "Ocorreu um erro, por favor tente mais tarde.",
-      "Erro"
-    );
+    this.router.navigate(["/home"]);
   }
 }

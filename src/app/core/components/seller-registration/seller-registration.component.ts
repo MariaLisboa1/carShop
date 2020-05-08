@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SellerService } from "src/app/services/seller.service";
-import { Toast } from "src/app/shared/helpers/Toast/toast";
+import { Toast } from "src/app/shared/helpers/toast/toast";
 
 @Component({
   selector: "app-seller-registration",

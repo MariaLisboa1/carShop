@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { GenericValidator } from "src/app/shared/helpers/validateCpf/validateCpf";
-import { Toast } from "src/app/shared/helpers/Toast/toast";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { Toast } from "src/app/shared/helpers/toast/toast";
 import { ClientService } from "src/app/services/client.service";
+import { Builder } from "src/app/shared/helpers/builder/builder";
 
 @Component({
   selector: "app-edit-client",
@@ -33,7 +33,8 @@ export class EditClientComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private toast: Toast,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private builder: Builder
   ) {}
 
   ngOnInit() {
@@ -48,25 +49,15 @@ export class EditClientComponent implements OnInit {
 
   createFormEdit() {
     this.editProfileForm = this.fb.group({
-      name: this.fb.control(this.client.name, [Validators.required]),
-      cpf: this.fb.control({ value: this.client.cpf, disabled: false }, [
-        Validators.required,
-        GenericValidator.isValidCpf(),
-      ]),
-      phone: this.fb.control(this.client.phone, [Validators.required]),
-      birth: this.fb.control(
-        { value: this.client.birth_date, disabled: false },
-        [Validators.required, GenericValidator.isValidDate()]
-      ),
+      name: this.fb.control(this.client.name),
+      cpf: this.fb.control(this.client.cpf),
+      phone: this.fb.control(this.client.phone),
+      birth: this.fb.control(this.client.birth_date),
       photo: this.fb.control(this.client.vehicle.image),
-      cep: this.fb.control(this.client.address.cep, [Validators.required]),
-      publicPlace: this.fb.control(this.client.address.publicPlace, [
-        Validators.required,
-      ]),
-      num: this.fb.control(this.client.address.num, [Validators.required]),
-      neighborhood: this.fb.control(this.client.address.neighborhood, [
-        Validators.required,
-      ]),
+      cep: this.fb.control(this.client.address.cep),
+      publicPlace: this.fb.control(this.client.address.publicPlace),
+      num: this.fb.control(this.client.address.num),
+      neighborhood: this.fb.control(this.client.address.neighborhood),
       vehicle: this.fb.control(this.client.vehicle.type),
       brand: this.fb.control(this.client.vehicle.brand),
       model: this.fb.control(this.client.vehicle.model),
@@ -77,77 +68,43 @@ export class EditClientComponent implements OnInit {
 
   editClient() {
     this.visibleLoading = true;
+    this.selectFile = this.editProfileForm.value.photo;
+    const client = this.builder.buildClient(this.editProfileForm.value);
 
-    this.clientService.update(this.id, this.assembleClient()).subscribe(
+    this.clientService.update(this.id, client).subscribe(
       () => this.updateImage(),
-      () => this.showMessageError()
+      () => this.toast.emitToastError()
     );
   }
 
   updateImage() {
     const photo = new FormData();
+    const file = this.selectFile;
 
-    if (typeof this.selectFile != "string") {
-      Object.defineProperty(this.selectFile, "image", {
+    if (typeof file != "string") {
+      Object.defineProperty(file, "image", {
         writable: true,
         value: this.id + ".png",
       });
 
-      photo.append("image", this.selectFile, this.selectFile.name);
+      photo.append("image", file, file.name);
 
       this.clientService.sendImage(photo, this.id).subscribe(
         () => {
           this.toast.emitToastSuccess("Foto editada com sucesso.");
-          this.router.navigate(["/"]);
+          this.router.navigate(["/home"]);
           this.visibleLoading = false;
         },
         () => {
           this.visibleLoading = false;
-          this.showMessageError();
+          this.toast.emitToastError();
         }
       );
       return;
     }
     this.visibleLoading = false;
     this.toast.emitToastSuccess("Cliente editado com sucesso.");
-    this.router.navigate(["/"]);
-  }
-
-  assembleClient() {
-    const form = this.editProfileForm.value;
-    this.selectFile = form.photo;
-
-    const address = {
-      cep: form.cep,
-      publicPlace: form.publicPlace,
-      num: form.num,
-      neighborhood: form.neighborhood,
-    };
-
-    const vehicle = {
-      type: form.vehicle,
-      brand: form.brand,
-      model: form.model,
-      year: form.year,
-      value: form.value.value,
-      yearModel: form.value.yearModel,
-      fuel: form.value.yearMfuelodel,
-      codeFipe: form.value.codeFipe,
-      referenceMonth: form.value.referenceMonth,
-      vehicleType: form.value.vehicleType,
-      fuelAbbreviation: form.value.fuelAbbreviation,
-    };
-
-    const client = {
-      name: form.name,
-      cpf: form.cpf,
-      phone: form.phone,
-      birth_date: form.birth,
-      address,
-      vehicle,
-    };
-
-    return client;
+    this.router.navigate(["/home"]);
   }
 
   deleteClient() {
@@ -156,14 +113,7 @@ export class EditClientComponent implements OnInit {
         this.toast.emitToastSuccess("Cliente deletado com sucesso.");
         this.router.navigate(["/home"]);
       },
-      () => this.showMessageError()
-    );
-  }
-
-  showMessageError() {
-    this.toast.emitToastError(
-      "Ocorreu um erro, por favor tente mais tarde.",
-      "Erro"
+      () => this.toast.emitToastError()
     );
   }
 }

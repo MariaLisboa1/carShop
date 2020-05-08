@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Toast } from "src/app/shared/helpers/Toast/toast";
+import { Toast } from "src/app/shared/helpers/toast/toast";
 import { ClientService } from "src/app/services/client.service";
+import { IClient } from "src/app/interfaces/interfaces";
 
 @Component({
   selector: "app-home",
@@ -9,7 +10,7 @@ import { ClientService } from "src/app/services/client.service";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
-  clients: any;
+  clients: IClient[] = [];
   noHaveClients = false;
   visibleLoading = true;
 
@@ -24,41 +25,35 @@ export class HomeComponent implements OnInit {
       (clients) => {
         this.visibleLoading = false;
         this.clients = clients;
+
         if (this.clients) return;
 
         this.noHaveClients = true;
       },
       () => {
         this.visibleLoading = false;
-        this.showMessageError();
+        this.toast.emitToastError();
       }
     );
   }
 
-  converteLowerCase(name: string) {
+  formatText(name: string) {
     return name.toLowerCase().replace(/(?:^|\s)\S/g, function (a) {
       return a.toUpperCase();
     });
   }
 
-  deleteClient(id: number) {
+  deleteClient(id: string) {
     this.clientService.delete(id).subscribe(
       () => {
         this.clients = this.clients.filter((client) => client._id !== id);
         this.toast.emitToastSuccess("Cliente deletado com sucesso.");
       },
-      () => this.showMessageError()
+      () => this.toast.emitToastError()
     );
   }
 
-  editClient(id) {
+  navigateFormEditClient(id) {
     this.router.navigate(["/edit-client"], { queryParams: { id } });
-  }
-
-  showMessageError() {
-    this.toast.emitToastError(
-      "Ocorreu um erro, por favor tente mais tarde.",
-      "Erro"
-    );
   }
 }

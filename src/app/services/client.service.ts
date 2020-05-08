@@ -21,8 +21,8 @@ export class ClientService {
     });
   }
 
-  getAllClients() {
-    return this.http.get(`${environment.urlHeroku}/clients/`, {
+  getAllClients(): Observable<IClient[]> {
+    return this.http.get<IClient[]>(`${environment.urlHeroku}/clients/`, {
       headers: this.AuthToken,
     });
   }
@@ -33,16 +33,20 @@ export class ClientService {
     });
   }
 
-  delete(id: number) {
+  delete(id: string) {
     return this.http.delete(`${environment.urlHeroku}/clients/${id}`, {
       headers: this.AuthToken,
     });
   }
 
-  update(id: string, client) {
-    return this.http.put(`${environment.urlHeroku}/clients/${id}`, client, {
-      headers: this.AuthToken,
-    });
+  update(id: string, client): Observable<IClient> {
+    return this.http.put<IClient>(
+      `${environment.urlHeroku}/clients/${id}`,
+      client,
+      {
+        headers: this.AuthToken,
+      }
+    );
   }
 
   sendImage(image, id: string) {
