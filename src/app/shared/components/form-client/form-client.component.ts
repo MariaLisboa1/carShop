@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { IBrand, IModel, IYear, IValue } from "src/app/interfaces/interfaces";
 import { VehiclesService } from "src/app/services/vehicles.service";
-import { Toast } from "../../helpers/Toast/toast";
+import { Toast } from "../../helpers/toast/toast";
 
 @Component({
   selector: "app-form-client",
@@ -48,69 +48,80 @@ export class FormClientComponent implements OnInit {
   }
 
   onSubmit(client) {
-    client["value"] = this.createValue();
+    client["value"] = this.buildValue();
 
     if (this.selectFile) {
       client["photo"] = this.selectFile;
     }
+
     this.btnSubmit.emit(client);
   }
 
   getVehicleBrands() {
-    this.path = this.getSelect("vehicle")
-      ? this.getSelect("vehicle")
-      : this.client
-      ? this.client.vehicle.type
-      : "caminhoes";
+    const vehicle = this.getValueSelect("vehicle");
+    if (vehicle) {
+      this.path = vehicle;
+    } else if (this.client) {
+      this.path = this.client.vehicle.type;
+    } else {
+      this.path = "caminhoes";
+    }
 
     this.vehicleService.getVehicleBrands(this.path).subscribe(
       (brands) => (this.brands = brands),
-      () => this.showMessageError()
+      () => this.toast.emitToastError()
     );
   }
 
   getModels() {
     this.idBrand =
-      parseFloat(this.getSelect("brand")) ||
+      parseFloat(this.getValueSelect("brand")) ||
       (this.client ? this.client.vehicle.brand : 102);
 
     this.vehicleService.getModels(this.path, this.idBrand).subscribe(
       (models) => (this.models = models.modelos),
-      () => this.showMessageError()
+      () => this.toast.emitToastError()
     );
   }
 
   getYear() {
-    this.idModel = parseFloat(this.getSelect("model"))
-      ? parseFloat(this.getSelect("model"))
-      : this.client
-      ? this.client.vehicle.model
-      : 5986;
+    const modelId = parseFloat(this.getValueSelect("model"));
+
+    if (modelId) {
+      this.idModel = modelId;
+    } else if (this.client) {
+      this.idModel = this.client.vehicle.model;
+    } else {
+      this.idModel = 5986;
+    }
 
     this.vehicleService
       .getYear(this.path, this.idBrand, this.idModel)
       .subscribe(
         (years) => (this.years = years),
-        () => this.showMessageError()
+        () => this.toast.emitToastError()
       );
   }
 
   getValue() {
-    this.year = this.getSelect("year")
-      ? this.getSelect("year")
-      : this.client
-      ? this.client.vehicle.year
-      : "32000-3";
+    const year = this.getValueSelect("year");
+    if (year) {
+      this.year = year;
+    } else if (this.client) {
+      this.year = this.client.vehicle.year;
+    } else {
+      this.year = "32000-3";
+    }
 
     this.vehicleService
       .getValue(this.path, this.idBrand, this.idModel, this.year)
       .subscribe(
         (value) => (this.value = value),
-        () => this.showMessageError()
+        () => this.toast.emitToastError()
       );
   }
 
-  createValue() {
+  buildValue() {
     return {
       value: this.value.Valor,
       brand: this.value.Marca,
@@ -124,28 +135,27 @@ export class FormClientComponent implements OnInit {
     };
   }
 
-  getSelect(id: any) {
-    const select = document.getElementById(id) as HTMLSelectElement;
+  getValueSelect(selector: any) {
+    const select = document.getElementById(selector) as HTMLSelectElement;
     return select.options[select.selectedIndex]
       ? select.options[select.selectedIndex].value.toLowerCase()
       : "";
   }
 
-  readURL(event) {
-    this.selectFile = <File>event.target.files[0];
+  readFile(event) {
+    const file = <File>event.target.files;
+    this.selectFile = file[0];
 
-    if (<File>event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-
+    if (file && file[0]) {
       const reader = new FileReader();
 
       reader.onload = (e) => (this.imageSrc = reader.result);
 
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.selectFile);
     }
   }
 
-  delClient() {
+  emitDeleteClient() {
     this.visibleLoading = true;
     this.deleteClient.emit();
   }
@@ -155,12 +165,5 @@ export class FormClientComponent implements OnInit {
     await this.getModels();
     await this.getYear();
     await this.getValue();
-  }
-
-  showMessageError() {
-    this.toast.emitToastError(
-      "Ocorreu um erro, por favor tente mais tarde.",
-      "Erro"
-    );
   }
 }

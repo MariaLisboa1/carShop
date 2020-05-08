@@ -1,18 +1,18 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { RegisterComponent } from "./core/components/register/register.component";
 import { HomeComponent } from "./core/components/home/home.component";
 import { EditClientComponent } from "./core/components/edit-client/edit-client.component";
 import { SellerRegistrationComponent } from "./core/components/seller-registration/seller-registration.component";
 import { LoginComponent } from "./security/login/login.component";
 import { LoggedInGuard } from "./security/loggedin.guard";
 import { Error404Component } from "./shared/components/error404/error404.component";
+import { RegisterClientComponent } from "./core/components/register-client/register-client.component";
 
 const routes: Routes = [
   { path: "home", component: HomeComponent, canActivate: [LoggedInGuard] },
   {
     path: "register",
-    component: RegisterComponent,
+    component: RegisterClientComponent,
     canActivate: [LoggedInGuard],
   },
   {

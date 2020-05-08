@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { Router } from "@angular/router";
-import { Toast } from "src/app/shared/helpers/Toast/toast";
+import { Toast } from "src/app/shared/helpers/toast/toast";
 
 @Component({
   selector: "app-login",
@@ -44,10 +44,7 @@ export class LoginComponent implements OnInit {
       },
       () => {
         this.visibleLoading = false;
-        this.toast.emitToastError(
-          "Ocorreu um erro. Por favor tente mais tarde.",
-          "Erro"
-        );
+        this.toast.emitToastError();
       }
     );
   }

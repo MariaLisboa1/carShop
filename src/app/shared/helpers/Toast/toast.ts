@@ -7,7 +7,10 @@ export class Toast {
     return toastr.success(message);
   }
 
-  async emitToastError(message, title) {
+  async emitToastError(
+    message = "Ocorreu um erro, por favor tente mais tarde.",
+    title = "Error"
+  ) {
     return toastr.error(message, title);
   }
 }

@@ -25,13 +25,13 @@
         </thead>
         <tbody *ngFor="let client of clients">
           <tr>
-            <td>{{ converteLowerCase(client.name) }}</td>
-            <td>{{ client.cpf | mask: "000.000.000-00" }}</td>
-            <td>{{ converteLowerCase("CarrO") }}</td>
+            <td>{{ formatText(client?.name) }}</td>
+            <td>{{ client?.cpf | mask: "000.000.000-00" }}</td>
+            <td>{{ formatText("CarrO") }}</td>
             <td>{{ client?.vehicle?.brand }}</td>
             <td>{{ client?.vehicle?.model }}</td>
             <td>{{ client?.vehicle?.value }}</td>
-            <td (click)="editClient(client._id)">
+            <td (click)="navigateFormEditClient(client._id)">
               <i class="fa fa-edit" aria-hidden="true"></i>
             </td>
             <td (click)="deleteClient(client._id)">
