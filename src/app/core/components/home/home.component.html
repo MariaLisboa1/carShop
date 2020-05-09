@@ -1,12 +1,11 @@
 <app-header></app-header>
-
 <div class="spinner" *ngIf="visibleLoading"></div>
 
-<div class="container" *ngIf="!visibleLoading">
+<div class="container">
   <h1 class="text-center py-3">Clientes</h1>
 
   <div>
-    <div class="messageError" *ngIf="noHaveClients">
+    <div *ngIf="noHaveClients">
       <h4 class="text-danger text-center">Não tem clientes.</h4>
     </div>
     <div class="table-responsive-md" *ngIf="!noHaveClients">
@@ -25,9 +24,9 @@
         </thead>
         <tbody *ngFor="let client of clients">
           <tr>
-            <td>{{ formatText(client?.name) }}</td>
-            <td>{{ client?.cpf | mask: "000.000.000-00" }}</td>
-            <td>{{ formatText("CarrO") }}</td>
+            <td>{{ client?.name }}</td>
+            <td>{{ client?.cpf }}</td>
+            <td>{{ formatText(client?.vehicle?.type) }}</td>
             <td>{{ client?.vehicle?.brand }}</td>
             <td>{{ client?.vehicle?.model }}</td>
             <td>{{ client?.vehicle?.value }}</td>
@@ -42,6 +41,6 @@
       </table>
     </div>
   </div>
-</div>
 
-<app-footer></app-footer>
+  <app-footer></app-footer>
+</div>

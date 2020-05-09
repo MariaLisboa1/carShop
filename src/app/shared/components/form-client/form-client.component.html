@@ -1,5 +1,6 @@
 <div class="container form clearFix" style="margin: 5% auto; max-width: 980px;">
   <form
+    id="form-client"
     [formGroup]="formGroupDynamic"
     class="clearFix"
     (ngSubmit)="onSubmit(formGroupDynamic.value)"
@@ -13,6 +14,7 @@
         <app-input>
           <input
             type="text"
+            name="name"
             formControlName="name"
             class="form-control"
             placeholder="Nome*"
@@ -23,6 +25,7 @@
       <div class="float-left form-group pr-1 pl-1">
         <app-input
           ><input
+            name="cpf"
             type="text"
             mask="000.000.000-00"
             formControlName="cpf"
@@ -39,6 +42,7 @@
       <div class="float-right form-group pr-1 pl-1">
         <app-input>
           <input
+            name="phone"
             type="text"
             mask="(00)0 0000-0000"
             formControlName="phone"
@@ -50,6 +54,7 @@
 
       <div class="form-group pr-1 pl-1">
         <input
+          name="birth"
           type="text"
           mask="00/00/0000"
           formControlName="birth"
@@ -63,11 +68,12 @@
       </div>
 
       <div>
-        <h5 class="pr-1 pl-1">Endereço</h5>
+        <h5 class="endereco pr-1 pl-1">Endereço</h5>
 
         <div class="float-left form-group pr-1 pl-1">
           <app-input>
             <input
+              name="cep"
               type="text"
               mask="00000-000"
               formControlName="cep"
@@ -80,6 +86,7 @@
         <div class="float-right form-group pr-1 pl-1">
           <app-input>
             <input
+              name="publicPlace"
               type="text"
               formControlName="publicPlace"
               class="form-control"
@@ -91,6 +98,7 @@
         <div class="form-group pr-1 pl-1">
           <app-input>
             <input
+              name="neighborhood"
               type="text"
               formControlName="neighborhood"
               class="form-control"
@@ -102,6 +110,7 @@
         <div class="float-left form-group pr-1 pl-1">
           <app-input>
             <input
+              name="num"
               type="text"
               formControlName="num"
               class="form-control"
@@ -142,6 +151,7 @@
 
         <div class="float-left form-group pr-1 pl-1">
           <select
+            name="vehicle"
             formControlName="vehicle"
             id="vehicle"
             (input)="getVehicleBrands()"
@@ -154,7 +164,12 @@
         </div>
 
         <div class="float-left form-group pr-1 pl-1">
-          <select formControlName="brand" id="brand" (input)="getModels()">
+          <select
+            name="brand"
+            formControlName="brand"
+            id="brand"
+            (input)="getModels()"
+          >
             <option
               *ngFor="let brand of brands"
               [value]="brand.codigo"
@@ -167,7 +182,12 @@
         </div>
         <div class="clearFix"></div>
         <div class="float-left form-group pr-1 pl-1">
-          <select formControlName="model" id="model" (input)="getYear()">
+          <select
+            name="model"
+            formControlName="model"
+            id="model"
+            (input)="getYear()"
+          >
             <option
               *ngFor="let model of models"
               [value]="model.codigo"
@@ -180,7 +200,12 @@
         </div>
 
         <div class="float-left form-group pr-1 pl-1">
-          <select formControlName="year" id="year" (input)="getValue()">
+          <select
+            name="year"
+            formControlName="year"
+            id="year"
+            (input)="getValue()"
+          >
             <option
               *ngFor="let year of years"
               [value]="year.codigo"
@@ -201,6 +226,7 @@
     <div class="row">
       <div class="col-6 div-btn text-center py-4">
         <button
+          id="btnSubmit"
           [disabled]="!visibleDelete && formGroupDynamic.invalid"
           type="submit"
           class="btn btn_primary"

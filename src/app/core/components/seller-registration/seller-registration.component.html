@@ -1,6 +1,6 @@
 <app-header> </app-header>
 <div class="container">
-  <form [formGroup]="sellerRegisterForm" (ngSubmit)="onSubmit()">
+  <form id="register" [formGroup]="sellerRegisterForm" (ngSubmit)="onSubmit()">
     <h1 class="my-4">Cadastro de Vendedor</h1>
 
     <div class="row">
@@ -8,28 +8,31 @@
         <app-input>
           <input
             type="text"
+            name="name"
             formControlName="name"
-            class="form-control"
+            class="input form-control"
             placeholder="Nome*"
-            />
+          />
         </app-input>
 
         <app-input>
           <input
+            name="email"
             type="email"
             formControlName="email"
-            class="form-control"
+            class="input form-control"
             placeholder="Email*"
-            />
+          />
         </app-input>
 
         <app-input>
           <input
+            name="password"
             type="password"
             formControlName="password"
-            class="form-control"
+            class="input form-control"
             placeholder="Senha*"
-            />
+          />
         </app-input>
       </div>
     </div>
@@ -38,13 +41,16 @@
 
     <div class="col-12">
       <button
+        id="btnSubmit"
         class="btn btn_primary text-center"
-        [disabled]="sellerRegisterForm.invalid">
+        [disabled]="sellerRegisterForm.invalid"
+      >
         Cadastrar
       </button>
     </div>
-    <a class="have-account" [routerLink]="['/login']">Já tem uma conta? Faça
-      login</a>
+    <a class="have-account" [routerLink]="['/login']"
+      >Já tem uma conta? Faça login</a
+    >
   </form>
 </div>
 
