@@ -34,7 +34,7 @@ describe("FooterComponent", () => {
       expect(de.innerText).toContain("© 2020 Copyright:");
     });
 
-    it("should be have a title site", () => {
+    it("should be have a site title", () => {
       fixture.detectChanges();
       let de = fixture.debugElement.query(By.css("a")).nativeElement;
 
@@ -43,14 +43,14 @@ describe("FooterComponent", () => {
   });
 
   describe("Checks the CSS", () => {
-    it("Should be selector `footer`", () => {
+    it("should have a selector `footer`", () => {
       fixture.detectChanges();
       const el = fixture.debugElement.query(By.css("footer"));
 
       expect(el).toBeTruthy();
     });
 
-    it("Should be selector `a`", () => {
+    it("should have a selector `a`", () => {
       fixture.detectChanges();
       const el = fixture.debugElement.query(By.css("footer a"));
 

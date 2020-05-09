@@ -40,7 +40,7 @@ describe("SellerRegistrationComponent", () => {
       expect(de.innerText).toContain("Cadastro de Vendedor");
     });
 
-    it("should be have a title button", () => {
+    it("should be have a button title", () => {
       fixture.detectChanges();
       let de = fixture.debugElement.query(By.css("button")).nativeElement;
 

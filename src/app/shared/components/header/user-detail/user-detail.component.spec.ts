@@ -4,8 +4,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { Toast } from "src/app/shared/helpers/toast/toast";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { UserDetailComponent } from "./user-detail.component";
-import { HttpClientModule, HttpClient } from "@angular/common/http";
-import { Router } from "@angular/router";
+import { HttpClientModule } from "@angular/common/http";
 import { AuthenticationService } from "src/app/services/authentication.service";
 
 class MockedAuthService {
@@ -42,7 +41,7 @@ describe("UserDetailComponent", () => {
   });
 
   describe("Checks content displayed in HTML", () => {
-    it("should be have a button adding client", () => {
+    it("Should be have a button to add customer", () => {
       fixture.detectChanges();
       let de = fixture.debugElement.query(By.css("button")).nativeElement;
 
@@ -57,7 +56,7 @@ describe("UserDetailComponent", () => {
       expect(de.innerText).toContain("Sobre");
     });
 
-    it("should be have a button about", () => {
+    it("should be have a button logout", () => {
       fixture.detectChanges();
       let de = fixture.debugElement.query(By.css("li:nth-child(3n) button"))
         .nativeElement;
@@ -67,7 +66,7 @@ describe("UserDetailComponent", () => {
   });
 
   describe("Checks the CSS", () => {
-    it("Should be selector `button`", () => {
+    it("Should be have selector `button`", () => {
       fixture.detectChanges();
       const el = fixture.debugElement.query(By.css("button"));
 

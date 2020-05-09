@@ -1,7 +1,7 @@
 <app-header> </app-header>
 
 <div class="container">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <h1 class="py-2">Login</h1>
 
     <div class="row">
@@ -9,9 +9,11 @@
         <app-input>
           <input
             type="email"
+            name="email"
             formControlName="email"
             class="input form-control"
             placeholder="Email*"
+            id="email"
             />
         </app-input>
       </div>
@@ -19,10 +21,12 @@
       <div class="col-12">
         <app-input>
           <input
-            class="inpu form-control"
+            name="password"
+            class="input form-control"
             type="password"
             formControlName="password"
             placeholder="Senha*"
+            id="password"
             />
         </app-input>
       </div>
@@ -31,6 +35,7 @@
 
     <div class="col-12">
       <button
+        id="btnSubmit"
         type="submit"
         [disabled]="loginForm.invalid"
         class="btn btn_primary">

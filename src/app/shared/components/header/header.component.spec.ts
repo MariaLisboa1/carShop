@@ -42,14 +42,14 @@ describe("HeaderComponent", () => {
       expect(el).toBeTruthy();
     });
 
-    it("Should be selector `nav`", () => {
+    it("Should  have selector `nav`", () => {
       fixture.detectChanges();
       const el = fixture.debugElement.query(By.css("nav"));
 
       expect(el).toBeTruthy();
     });
 
-    it("Should be selector `a`", () => {
+    it("Should be have selector `a`", () => {
       fixture.detectChanges();
       const el = fixture.debugElement.query(By.css("nav a"));
 

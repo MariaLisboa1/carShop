@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(seller).subscribe(
       (seller) => {
         this.visibleLoading = false;
+
         localStorage.setItem("token", seller.token);
         this.router.navigate(["/home"]);
       },

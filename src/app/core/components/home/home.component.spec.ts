@@ -86,14 +86,6 @@ describe("HomeComponent", () => {
       expect(de.innerText).toContain("Motos");
     });
 
-    it("should be have a vehicle", () => {
-      fixture.detectChanges();
-      let de = fixture.debugElement.query(By.css("td:nth-child(3n)"))
-        .nativeElement;
-
-      expect(de.innerText).toContain("Motos");
-    });
-
     it("should be have a brand", () => {
       fixture.detectChanges();
       let de = fixture.debugElement.query(By.css("td:nth-child(4n)"))

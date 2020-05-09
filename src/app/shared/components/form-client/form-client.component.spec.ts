@@ -14,6 +14,10 @@ describe("FormClientComponent", () => {
 
   const formBuilder: FormBuilder = new FormBuilder();
 
+  // beforeAll(function () {
+  //   jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+  // });
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -59,49 +63,42 @@ describe("FormClientComponent", () => {
     fixture.detectChanges();
   }));
 
-  it("should create", () => {
+  it("should create", async(() => {
     expect(component).toBeDefined();
-  });
+  }));
 
   describe("Checks content displayed in HTML", () => {
-    it("should be have a title", () => {
+    it("should be have a title", async(() => {
       component.title = "Titulo";
       fixture.detectChanges();
       let de = fixture.debugElement.query(By.css("h2")).nativeElement;
-
       expect(de.innerText).toContain("Titulo");
-    });
+    }));
 
-    it("should be have a h5", () => {
+    it("should be have a h5", async(() => {
       fixture.detectChanges();
       let de = fixture.debugElement.query(By.css("h5")).nativeElement;
-
       expect(de.innerText).toContain("Informações Pessoais");
-    });
+    }));
 
-    it("should be have a title address", () => {
+    it("should be have a address title", async(() => {
       fixture.detectChanges();
       let de = fixture.debugElement.query(By.css(".endereco")).nativeElement;
-
       expect(de.innerText).toContain("Endereço");
-    });
+    }));
 
-    it("should be have a title vehicle", () => {
+    it("should be have a vehicle title", () => {
       fixture.detectChanges();
       let de = fixture.debugElement.query(By.css(".float-right h5"))
         .nativeElement;
-
       expect(de.innerText).toContain("Automóvel");
     });
-
     it("should be have a label", () => {
       fixture.detectChanges();
       let de = fixture.debugElement.query(By.css("label")).nativeElement;
-
       expect(de.innerText).toContain("Selecionar um arquivo");
     });
-
-    it("should be have selected vehicle", () => {
+    it("should be have vehicle selected", () => {
       fixture.detectChanges();
       const select: HTMLSelectElement = fixture.debugElement.query(
         By.css("#vehicle")
@@ -109,21 +106,16 @@ describe("FormClientComponent", () => {
       select.value = select.options[1].value;
       select.dispatchEvent(new Event("change"));
       select.click();
-
       expect(select.innerText).toContain("Motos");
     });
-
-    it("should be have title button", () => {
+    it("should be have button title", () => {
       fixture.detectChanges();
       let de = fixture.debugElement.query(By.css("button")).nativeElement;
-
       expect(de.innerText).toContain("Editar");
     });
-
     it("should be have title in btn-danger", () => {
       fixture.detectChanges();
       let de = fixture.debugElement.query(By.css(".btn-danger")).nativeElement;
-
       expect(de.innerText).toContain("Excluir");
     });
   });
@@ -143,7 +135,7 @@ describe("FormClientComponent", () => {
       expect(el).toBeTruthy();
     });
 
-    it("Should be class `input`", () => {
+    it("Should be have selector `input`", () => {
       fixture.detectChanges();
       const el = fixture.debugElement.query(By.css("input"));
 
@@ -157,7 +149,7 @@ describe("FormClientComponent", () => {
       expect(el).toBeTruthy();
     });
 
-    it("Should be class `h5`", () => {
+    it("Should be have selector `h5`", () => {
       fixture.detectChanges();
       const el = fixture.debugElement.query(By.css("h5"));
 
@@ -178,7 +170,7 @@ describe("FormClientComponent", () => {
       expect(el).toBeTruthy();
     });
 
-    it("Should be selector `select`", () => {
+    it("Should be have selector `select`", () => {
       fixture.detectChanges();
       const el = fixture.debugElement.query(By.css("select"));
 

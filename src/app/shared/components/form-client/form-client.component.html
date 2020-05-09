@@ -1,8 +1,10 @@
 <div class="container form clearFix" style="margin: 5% auto; max-width: 980px;">
   <form
+    id="form-client"
     [formGroup]="formGroupDynamic"
     class="clearFix"
-    (ngSubmit)="onSubmit(formGroupDynamic.value)">
+    (ngSubmit)="onSubmit(formGroupDynamic.value)"
+  >
     <h2 class="my-4">{{ title }}</h2>
 
     <div class="float-left">
@@ -12,22 +14,25 @@
         <app-input>
           <input
             type="text"
+            name="name"
             formControlName="name"
             class="form-control"
             placeholder="Nome*"
-            />
+          />
         </app-input>
       </div>
 
       <div class="float-left form-group pr-1 pl-1">
-        <app-input><input
+        <app-input
+          ><input
+            name="cpf"
             type="text"
             mask="000.000.000-00"
             formControlName="cpf"
             class="form-control"
             placeholder="CPF*"
             [readonly]="readonly"
-            /></app-input>
+        /></app-input>
 
         <div *ngIf="formGroupDynamic.get('cpf').getError('cpfNotValid')">
           <p class="text-danger">Por favor digite um CPF válido.</p>
@@ -37,23 +42,25 @@
       <div class="float-right form-group pr-1 pl-1">
         <app-input>
           <input
+            name="phone"
             type="text"
             mask="(00)0 0000-0000"
             formControlName="phone"
             class="form-control"
             placeholder="Telefone*"
-            />
+          />
         </app-input>
       </div>
 
       <div class="form-group pr-1 pl-1">
         <input
+          name="birth"
           type="text"
           mask="00/00/0000"
           formControlName="birth"
           class="form-control"
           placeholder="Data de Nascimento*"
-          />
+        />
 
         <div *ngIf="formGroupDynamic.get('birth').getError('dateNotValid')">
           <p class="text-danger">Por favor digite uma data válida.</p>
@@ -66,45 +73,49 @@
         <div class="float-left form-group pr-1 pl-1">
           <app-input>
             <input
+              name="cep"
               type="text"
               mask="00000-000"
               formControlName="cep"
               class="form-control"
               placeholder="CEP*"
-              />
+            />
           </app-input>
         </div>
 
         <div class="float-right form-group pr-1 pl-1">
           <app-input>
             <input
+              name="publicPlace"
               type="text"
               formControlName="publicPlace"
               class="form-control"
               placeholder="Logradouro*"
-              />
+            />
           </app-input>
         </div>
 
         <div class="form-group pr-1 pl-1">
           <app-input>
             <input
+              name="neighborhood"
               type="text"
               formControlName="neighborhood"
               class="form-control"
               placeholder="Bairro*"
-              />
+            />
           </app-input>
         </div>
 
         <div class="float-left form-group pr-1 pl-1">
           <app-input>
             <input
+              name="num"
               type="text"
               formControlName="num"
               class="form-control"
               placeholder="Número*"
-              />
+            />
           </app-input>
         </div>
       </div>
@@ -121,7 +132,7 @@
               height="80"
               [src]="imageSrc || vehicleSrc"
               alt="Sua imagem"
-              />
+            />
             <br />
             <label for="input-file">
               Selecionar um arquivo
@@ -133,16 +144,18 @@
               type="file"
               value=""
               (change)="readFile($event)"
-              />
+            />
             <span id="file-name"></span>
           </div>
         </div>
 
         <div class="float-left form-group pr-1 pl-1">
           <select
+            name="vehicle"
             formControlName="vehicle"
             id="vehicle"
-            (input)="getVehicleBrands()">
+            (input)="getVehicleBrands()"
+          >
             <option *ngFor="let vehicle of vehicles" [value]="vehicle.codigo">
               Veículo:
               {{ vehicle.nome }}
@@ -151,11 +164,17 @@
         </div>
 
         <div class="float-left form-group pr-1 pl-1">
-          <select formControlName="brand" id="brand" (input)="getModels()">
+          <select
+            name="brand"
+            formControlName="brand"
+            id="brand"
+            (input)="getModels()"
+          >
             <option
               *ngFor="let brand of brands"
               [value]="brand.codigo"
-              [selected]="brand.nome">
+              [selected]="brand.nome"
+            >
               Marca:
               {{ brand.nome }}
             </option>
@@ -163,11 +182,17 @@
         </div>
         <div class="clearFix"></div>
         <div class="float-left form-group pr-1 pl-1">
-          <select formControlName="model" id="model" (input)="getYear()">
+          <select
+            name="model"
+            formControlName="model"
+            id="model"
+            (input)="getYear()"
+          >
             <option
               *ngFor="let model of models"
               [value]="model.codigo"
-              [selected]="model.nome">
+              [selected]="model.nome"
+            >
               Modelo:
               {{ model.nome }}
             </option>
@@ -175,11 +200,17 @@
         </div>
 
         <div class="float-left form-group pr-1 pl-1">
-          <select formControlName="year" id="year" (input)="getValue()">
+          <select
+            name="year"
+            formControlName="year"
+            id="year"
+            (input)="getValue()"
+          >
             <option
               *ngFor="let year of years"
               [value]="year.codigo"
-              [selected]="year.nome">
+              [selected]="year.nome"
+            >
               Ano:
               {{ year.nome }}
             </option>
@@ -195,9 +226,11 @@
     <div class="row">
       <div class="col-6 div-btn text-center py-4">
         <button
+          id="btnSubmit"
           [disabled]="!visibleDelete && formGroupDynamic.invalid"
           type="submit"
-          class="btn btn_primary">
+          class="btn btn_primary"
+        >
           {{ titleBtn }}
         </button>
       </div>
@@ -207,7 +240,8 @@
           type="button"
           *ngIf="visibleDelete"
           (click)="emitDeleteClient()"
-          class="btn btn-danger">
+          class="btn btn-danger"
+        >
           Excluir
         </button>
       </div>
