@@ -2,7 +2,7 @@
 
 Customer management application, by salespeople.
 
-API desenvolvida para implementações de novas funcionalidades: `https://github.com/MariaLisboa1/ClientApi.git`
+API developed for implementations of new features: `https://github.com/MariaLisboa1/ClientApi.git`
 
 ## Getting Started
 
